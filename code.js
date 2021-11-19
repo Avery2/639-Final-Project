@@ -38,9 +38,7 @@ function leave(country) {
 
 var current = d3.select("#current");
 var canvas = d3.select("#globe");
-console.log({ canvas });
 var foo = canvas.node();
-console.log({ foo });
 var context = canvas.node().getContext("2d");
 var water = { type: "Sphere" };
 var projection = d3.geoOrthographic().precision(0.1);
@@ -62,7 +60,6 @@ var currentCountry;
 //
 
 function setAngles() {
-  console.log("setAngles");
   var rotation = projection.rotate();
   rotation[0] = angles.y;
   rotation[1] = angles.x;
@@ -144,7 +141,6 @@ function rotate(elapsed) {
 }
 
 function loadData(cb) {
-  console.log("loadData")
   d3.json(
     "https://unpkg.com/world-atlas@1/world/110m.json",
     function (error, world) {
@@ -219,8 +215,6 @@ console.log("Initialization");
 
 setAngles();
 
-console.log({canvas})
-
 canvas
   .call(
     d3.drag().on("start", dragstarted).on("drag", dragged).on("end", dragended)
@@ -231,9 +225,6 @@ loadData(function (world, cList) {
   land = topojson.feature(world, world.objects.land);
   countries = topojson.feature(world, world.objects.countries);
   countryList = cList;
-    console.log("loadData2");
-    console.log({ land });
-    console.log({ countries });
 
   window.addEventListener("resize", scale);
   scale();
