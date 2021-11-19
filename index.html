@@ -1,3 +1,4 @@
+<!-- This example is from Alan Villalobos-->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,7 +7,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <link rel="stylesheet" href="styles.css"></link>
+  <link rel="stylesheet" href="styles.css">
+  </link>
   <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
 
@@ -14,6 +16,14 @@
   <h2 id="current"></h2>
   <canvas id="globe"></canvas>
   <script src="code.js"></script>
+
+  <label>Choose data type:</label>
+  <select id="selectButton">
+    <option value="frequency">Frequency</option>
+    <option value="preference">Preference</option>
+  </select>
 </body>
+
+<script src="bar.js"></script>
 
 </html>
