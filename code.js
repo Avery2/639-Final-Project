@@ -3,7 +3,7 @@
 //
 
 // ms to wait after dragging before auto-rotating
-var rotationDelay = 3000;
+var rotationDelay = 1500;
 // scale of the globe (not the canvas element)
 var scaleFactor = 0.9;
 // autorotation speed
@@ -11,8 +11,8 @@ var degPerSec = 6;
 // start angles
 var angles = { x: -20, y: 40, z: 0 };
 // colors
-var colorWater = "#fff";
-var colorLand = "#111";
+var colorWater = "#4C86A8";
+var colorLand = "#BDC696";
 var colorGraticule = "#ccc";
 var colorCountry = "#a00";
 
@@ -25,7 +25,7 @@ function enter(country) {
   var country = countryList.find(function (c) {
     return parseInt(c.id, 10) === parseInt(country.id, 10);
   });
-  current.text((country && country.name) || "");
+  current.text(("INFO: " + (country && country.name) || ""));
 }
 
 function leave(country) {
