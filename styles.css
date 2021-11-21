@@ -16,9 +16,15 @@ body {
   border: 1px solid red;
 }
 
+#info {
+  width: auto;
+  height: auto;
+}
+
 #box {
-  width: 25%;
+  width: 29vw;
   border: 1px solid blue;
+  height: 100vh;
 }
 
 #current {

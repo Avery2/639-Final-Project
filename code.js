@@ -44,7 +44,7 @@ function leave(country) {
 
 var current = d3.select("#current");
 var canvas = d3.select("#globe");
-var foo = canvas.node();
+var canvas2 = d3.select("#box");
 var context = canvas.node().getContext("2d");
 var water = { type: "Sphere" };
 var projection = d3.geoOrthographic().precision(0.1);
@@ -56,6 +56,7 @@ var q0; // Projection rotation as versor at start.
 var lastTime = d3.now();
 var degPerMs = degPerSec / 1000;
 var width, height;
+var width2, height2;
 var land, countries;
 var countryList;
 var autorotate, now, diff, roation;
@@ -76,12 +77,14 @@ function setAngles() {
 function scale() {
   width = document.documentElement.clientWidth * 0.7;
   height = document.documentElement.clientHeight;
-  console.log({ width });
-  console.log({ height });
   canvas.attr("width", width).attr("height", height);
   projection
     .scale((scaleFactor * Math.min(width, height)) / 2)
     .translate([width / 2, height / 2]);
+  
+  width2 = document.documentElement.clientWidth * 0.25;
+  height2 = document.documentElement.clientHeight;
+  canvas2.attr("width", width2).attr("height", height2);
   render();
 }
 
