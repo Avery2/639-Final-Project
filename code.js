@@ -25,11 +25,13 @@ function enter(country) {
   var country = countryList.find(function (c) {
     return parseInt(c.id, 10) === parseInt(country.id, 10);
   });
-  current.text(("NAME: " +
-    (country && country.name) +
-    " " +
-    (country && country.new_info) +
-    "" || ""));
+  current.text(
+    "NAME: " +
+      (country && country.name) +
+      " " +
+      (country && country.new_info) +
+      "" || ""
+  );
 }
 
 function leave(country) {
@@ -74,8 +76,8 @@ function setAngles() {
 function scale() {
   width = document.documentElement.clientWidth * 0.7;
   height = document.documentElement.clientHeight;
-  console.log({width})
-  console.log({height})
+  console.log({ width });
+  console.log({ height });
   canvas.attr("width", width).attr("height", height);
   projection
     .scale((scaleFactor * Math.min(width, height)) / 2)
@@ -147,19 +149,13 @@ function rotate(elapsed) {
 }
 
 function loadData(cb) {
-  d3.json(
-    "110m.json",
-    function (error, world) {
+  d3.json("110m.json", function (error, world) {
+    if (error) throw error;
+    d3.tsv("my_data.tsv", function (error, countries) {
       if (error) throw error;
-      d3.tsv(
-        "my_data.tsv",
-        function (error, countries) {
-          if (error) throw error;
-          cb(world, countries);
-        }
-      );
-    }
-  );
+      cb(world, countries);
+    });
+  });
 }
 
 // https://github.com/d3/d3-polygon
@@ -231,7 +227,7 @@ loadData(function (world, cList) {
   land = topojson.feature(world, world.objects.land);
   countries = topojson.feature(world, world.objects.countries);
   countryList = cList;
-  console.log({countryList})
+  console.log({ countryList });
 
   window.addEventListener("resize", scale);
   scale();
