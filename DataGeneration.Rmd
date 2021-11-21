@@ -1,0 +1,23 @@
+---
+title: "DataGeneration"
+author: "Avery Chan"
+date: "11/21/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+```{r}
+data <- read_tsv("world-country-names.tsv")
+
+data <- data %>% mutate(
+  new_info = abs(id) + utf8ToInt(name)
+)
+
+write_tsv(data, "my_data.tsv")
+read_tsv("my_data.tsv")
+```
+

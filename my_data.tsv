@@ -1,0 +1,253 @@
+id	name	new_info
+-1	Northern Cyprus	79
+-2	Kosovo	113
+-3	Somaliland	117
+4	Afghanistan	120
+8	Albania	112
+10	Antarctica	111
+12	Algeria	126
+16	American Samoa	126
+20	Andorra	52
+24	Angola	91
+28	Antigua and Barbuda	149
+31	Azerbaijan	143
+32	Argentina	146
+36	Australia	153
+40	Austria	155
+44	Bahamas	122
+48	Bahrain	159
+50	Bangladesh	164
+51	Armenia	167
+52	Barbados	156
+56	Belgium	157
+60	Bermuda	174
+64	Bhutan	174
+68	Bolivia, Plurinational State of	100
+70	Bosnia and Herzegovina	137
+72	Botswana	193
+74	Bouvet Island	186
+76	Brazil	190
+84	Belize	201
+86	British Indian Ocean Territory	201
+90	Solomon Islands	168
+92	Virgin Islands, British	203
+96	Brunei Darussalam	210
+100	Bulgaria	216
+104	Myanmar	208
+108	Burundi	209
+112	Belarus	226
+116	Cambodia	226
+120	Cameroon	152
+124	Canada	191
+132	Cape Verde	253
+136	Cayman Islands	248
+140	Central African Republic	254
+144	Sri Lanka	261
+148	Chad	263
+152	Chile	230
+156	China	267
+158	Taiwan, Province of China	272
+162	Christmas Island	278
+166	Cocos (Keeling) Islands	270
+170	Colombia	271
+174	Comoros	288
+175	Mayotte	285
+178	Congo	210
+180	Congo, the Democratic Republic of the	247
+184	Cook Islands	305
+188	Costa Rica	300
+191	Croatia	305
+192	Cuba	309
+196	Cyprus	311
+203	Czech Republic	281
+204	Benin	315
+208	Denmark	322
+212	Dominica	328
+214	Dominican Republic	318
+218	Ecuador	319
+222	El Salvador	336
+226	Equatorial Guinea	336
+231	Ethiopia	263
+232	Eritrea	299
+233	Estonia	354
+234	Faroe Islands	346
+238	Falkland Islands (Malvinas)	352
+239	South Georgia and the South Sandwich Islands	356
+242	Fiji	357
+246	Finland	324
+248	Åland Islands	359
+250	France	364
+254	French Guiana	370
+258	French Polynesia	362
+260	French Southern Territories	361
+262	Djibouti	376
+266	Gabon	376
+268	Georgia	300
+270	Gambia	337
+275	Palestinian Territory, Occupied	396
+276	Germany	388
+288	Ghana	402
+292	Gibraltar	409
+296	Kiribati	411
+300	Greece	378
+304	Greenland	415
+308	Grenada	422
+312	Guadeloupe	428
+316	Guam	420
+320	Guatemala	421
+324	Guinea	438
+328	Guyana	438
+332	Haiti	364
+334	Heard Island and McDonald Islands	401
+336	Holy See (Vatican City State)	457
+340	Honduras	452
+344	Hong Kong	458
+348	Hungary	465
+352	Iceland	467
+356	India	434
+360	Indonesia	471
+364	Iran, Islamic Republic of	478
+368	Iraq	484
+372	Ireland	476
+376	Israel	477
+380	Italy	494
+384	Côte d'Ivoire	494
+388	Jamaica	420
+392	Japan	459
+398	Kazakhstan	519
+400	Jordan	512
+404	Kenya	518
+408	Korea, Democratic People's Republic of	525
+410	Korea, Republic of	525
+414	Kuwait	492
+417	Kyrgyzstan	528
+418	Lao People's Democratic Republic	532
+422	Lebanon	538
+426	Lesotho	530
+428	Latvia	529
+430	Liberia	544
+434	Libya	544
+438	Liechtenstein	470
+440	Lithuania	507
+442	Luxembourg	563
+446	Macao	558
+450	Madagascar	564
+454	Malawi	571
+458	Malaysia	573
+462	Maldives	540
+466	Mali	577
+470	Malta	584
+474	Martinique	590
+478	Mauritania	582
+480	Mauritius	581
+484	Mexico	598
+492	Monaco	602
+496	Mongolia	528
+498	Moldova, Republic of	565
+499	Montenegro	620
+500	Montserrat	612
+504	Morocco	618
+508	Mozambique	625
+512	Oman	627
+516	Namibia	594
+520	Nauru	631
+524	Nepal	638
+528	Netherlands	644
+531	Curaçao	635
+533	Aruba	634
+534	Sint Maarten (Dutch part)	648
+535	Bonaire, Sint Eustatius and Saba	645
+540	New Caledonia	572
+548	Vanuatu	615
+554	New Zealand	675
+558	Nicaragua	670
+562	Niger	676
+566	Nigeria	683
+570	Niue	685
+574	Norfolk Island	652
+578	Norway	689
+580	Northern Mariana Islands	694
+581	United States Minor Outlying Islands	697
+583	Micronesia, Federated States of	687
+584	Marshall Islands	685
+585	Palau	699
+586	Pakistan	696
+591	Panama	623
+598	Papua New Guinea	665
+600	Paraguay	721
+604	Peru	716
+608	Philippines	722
+612	Pitcairn	729
+616	Poland	731
+620	Portugal	698
+624	Guinea-Bissau	735
+626	Timor-Leste	740
+630	Puerto Rico	746
+634	Qatar	738
+638	Réunion	739
+642	Romania	756
+643	Russian Federation	753
+646	Rwanda	678
+652	Saint Barthélemy	719
+654	Saint Helena, Ascension and Tristan da Cunha	775
+659	Saint Kitts and Nevis	771
+660	Anguilla	774
+662	Saint Lucia	779
+663	Saint Martin (French part)	778
+666	Saint Pierre and Miquelon	744
+670	Saint Vincent and the Grenadines	781
+674	San Marino	788
+678	Sao Tome and Principe	794
+682	Saudi Arabia	786
+686	Senegal	787
+688	Serbia	802
+690	Seychelles	800
+694	Sierra Leone	726
+702	Singapore	769
+703	Slovakia	824
+704	Viet Nam	816
+705	Slovenia	819
+706	Somalia	823
+710	South Africa	825
+716	Zimbabwe	794
+724	Spain	835
+728	South Sudan	842
+729	Sudan	845
+732	Western Sahara	836
+740	Suriname	841
+744	Svalbard and Jan Mayen	858
+748	Swaziland	858
+752	Sweden	784
+756	Switzerland	823
+760	Syrian Arab Republic	881
+762	Tajikistan	874
+764	Thailand	878
+768	Togo	885
+772	Tokelau	887
+776	Tonga	854
+780	Trinidad and Tobago	891
+784	United Arab Emirates	898
+788	Tunisia	904
+792	Turkey	896
+795	Turkmenistan	896
+796	Turks and Caicos Islands	910
+798	Tuvalu	908
+800	Uganda	832
+804	Ukraine	871
+807	Macedonia, the former Yugoslav Republic of	928
+818	Egypt	930
+826	United Kingdom	940
+831	Guernsey	948
+832	Jersey	947
+833	Isle of Man	911
+834	Tanzania, United Republic of	945
+840	United States	954
+850	Virgin Islands, U.S.	966
+854	Burkina Faso	958
+858	Uruguay	959
+860	Uzbekistan	974
+862	Venezuela, Bolivarian Republic of	972
+876	Wallis and Futuna	908
+882	Samoa	949
+887	Yemen	1008
+894	Zambia	1006

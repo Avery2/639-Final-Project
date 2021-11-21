@@ -25,7 +25,11 @@ function enter(country) {
   var country = countryList.find(function (c) {
     return parseInt(c.id, 10) === parseInt(country.id, 10);
   });
-  current.text(("INFO: " + (country && country.name) || ""));
+  current.text(("NAME: " +
+    (country && country.name) +
+    " " +
+    (country && country.new_info) +
+    "" || ""));
 }
 
 function leave(country) {
@@ -146,7 +150,7 @@ function loadData(cb) {
     function (error, world) {
       if (error) throw error;
       d3.tsv(
-        "world-country-names.tsv",
+        "my_data.tsv",
         function (error, countries) {
           if (error) throw error;
           cb(world, countries);
