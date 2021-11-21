@@ -1,11 +1,13 @@
 html, body {
     margin: 0;
     padding: 0;
-    background: #555;
+    background: #222;
   }
   
   #globe {
     cursor: move;  
+    width: 80%;
+    border: 1px solid red;
   }
   
   #current {
