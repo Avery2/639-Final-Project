@@ -86,7 +86,15 @@ function scale() {
   width2 = document.documentElement.clientWidth * 0.29;
   height2 = document.documentElement.clientHeight * 0.7;
   canvas3.attr("width", width2).attr("height", height2);
-  canvas3.style("background-color", "pink");
+  canvas3.style("background-color", "#ff000030");
+  // var svg = canvas3.append("svg").attr("width", width2).attr("height", height2).style("position", "absolute").style("bottom", 0);
+  canvas3.append('rect')
+  .attr('x', 10)
+  .attr('y', 10)
+  .attr('width', 40)
+  .attr('height', 40)
+  .attr('stroke', 'black')
+  .attr('fill', '#ffffff');
   render();
 }
 
