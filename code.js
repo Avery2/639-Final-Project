@@ -82,9 +82,9 @@ function scale() {
     .scale((scaleFactor * Math.min(width, height)) / 2)
     .translate([width / 2, height / 2]);
   
-  width2 = document.documentElement.clientWidth * 0.25;
-  height2 = document.documentElement.clientHeight;
-  canvas2.attr("width", width2).attr("height", height2);
+  // width2 = document.documentElement.clientWidth * 0.25;
+  // height2 = document.documentElement.clientHeight;
+  // canvas2.attr("width", width2).attr("height", height2);
   render();
 }
 
