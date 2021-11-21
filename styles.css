@@ -19,6 +19,9 @@ body {
 #info {
   width: auto;
   height: auto;
+  /* position: relative; TODO: May have to add this to box (parent container)*/
+  position: absolute;
+  bottom: 0;
 }
 
 #box {

@@ -45,6 +45,7 @@ function leave(country) {
 var current = d3.select("#current");
 var canvas = d3.select("#globe");
 var canvas2 = d3.select("#box");
+var canvas3 = d3.select("#info");
 var context = canvas.node().getContext("2d");
 var water = { type: "Sphere" };
 var projection = d3.geoOrthographic().precision(0.1);
@@ -82,9 +83,10 @@ function scale() {
     .scale((scaleFactor * Math.min(width, height)) / 2)
     .translate([width / 2, height / 2]);
   
-  // width2 = document.documentElement.clientWidth * 0.25;
-  // height2 = document.documentElement.clientHeight;
-  // canvas2.attr("width", width2).attr("height", height2);
+  width2 = document.documentElement.clientWidth * 0.29;
+  height2 = document.documentElement.clientHeight * 0.7;
+  canvas3.attr("width", width2).attr("height", height2);
+  canvas3.style("background-color", "pink");
   render();
 }
 
