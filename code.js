@@ -72,8 +72,10 @@ function setAngles() {
 }
 
 function scale() {
-  width = document.documentElement.clientWidth;
+  width = document.documentElement.clientWidth * 0.7;
   height = document.documentElement.clientHeight;
+  console.log({width})
+  console.log({height})
   canvas.attr("width", width).attr("height", height);
   projection
     .scale((scaleFactor * Math.min(width, height)) / 2)

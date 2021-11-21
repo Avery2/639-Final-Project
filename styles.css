@@ -2,12 +2,22 @@ html, body {
     margin: 0;
     padding: 0;
     background: #222;
+    color: white;
+  }
+
+  .container {
+    float: left;
   }
   
   #globe {
     cursor: move;  
-    width: 80%;
+    width: 70%;
     border: 1px solid red;
+  }
+
+  #box {
+    width: 25%;
+    border: 1px solid blue;
   }
   
   #current {
