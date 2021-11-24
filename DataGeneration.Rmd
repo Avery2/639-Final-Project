@@ -17,7 +17,41 @@ data <- data %>% mutate(
   new_info = abs(id) + utf8ToInt(name)
 )
 
-write_tsv(data, "my_data.tsv")
-read_tsv("my_data.tsv")
+# write_tsv(data, "my_data.tsv")
+# read_tsv("my_data.tsv")
 ```
+
+```{r}
+ind <- read.csv("data/Indicators.csv")
+```
+
+```{r}
+ind_names <- ind$CountryName %>% unique()
+data_names <- data$name
+
+ind_names %>% length()
+data_names %>% length()
+
+overlap_names <- intersect(ind_names, data_names)
+
+overlap_names %>% length()
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
