@@ -2,7 +2,9 @@
 title: "DataGeneration"
 author: "Avery Chan"
 date: "11/21/2021"
-output: html_document
+output: 
+  html_document:
+    df_print: paged
 ---
 
 ```{r setup, include=FALSE}
@@ -81,7 +83,18 @@ ind_more_140 <- country_count %>% filter(n > 170) %>% select(IndicatorName)
 ind$IndicatorName %>% unique()
 
 ind2 <- ind %>% filter(IndicatorName %in% ind_more_140$IndicatorName)
+```
 
+```{r}
+# ind2 %>% group_by(IndicatorName) %>% 
+#   summarise(
+#     n = n()
+#   ) %>% arrange(-n)
+country_count %>% filter(n > 170) %>% arrange(-n)
+```
+
+
+```{r}
 grouped <- ind2 %>% 
   select(CountryName, IndicatorName, Value) %>% 
   pivot_wider(
