@@ -208,6 +208,12 @@ function mousemove() {
   enter(c);
 }
 
+function selectOnClick() {
+  var c = getCountry(this);
+  console.log("selectOnClick");
+  console.log({ c });
+}
+
 function getCountry(event) {
   var pos = projection.invert(d3.mouse(event));
   return countries.features.find(function (f) {
@@ -234,7 +240,10 @@ canvas
   .call(
     d3.drag().on("start", dragstarted).on("drag", dragged).on("end", dragended)
   )
-  .on("mousemove", mousemove);
+  .on("mousemove", mousemove)
+  .on("click", selectOnClick);
+
+// canvas.on("onclick", selectOnClick)
 
 loadData(function (world, cList) {
   land = topojson.feature(world, world.objects.land);
