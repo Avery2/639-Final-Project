@@ -29,7 +29,7 @@ function enter(country) {
     "NAME: " +
       (country && country.name) +
       " " +
-      (country && country.new_info) +
+      (country && country.Urban_population) +
       "" || ""
   );
 }
@@ -240,6 +240,21 @@ loadData(function (world, cList) {
   land = topojson.feature(world, world.objects.land);
   countries = topojson.feature(world, world.objects.countries);
   countryList = cList;
+  for (c in cList) {
+    c_ = cList[c]
+    for (v in c_) {
+      if (c_[v] != undefined && !["id", "name"].includes(v)) {
+        // console.log(`${v}: ${c_[v]}`)
+        var str_val = c_[v]
+        var my_list = str_val.split(",")
+        my_list = my_list.map(function (x) {
+          return parseInt(x.trim())
+        })
+        c_[v] = my_list
+        // console.log(`${v}: ${my_list.length}`)
+      }
+    }
+  }
   console.log({ countryList });
 
   window.addEventListener("resize", scale);

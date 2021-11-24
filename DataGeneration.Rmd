@@ -27,6 +27,10 @@ ind <- read.csv("data/Indicators.csv")
 ```
 
 ```{r}
+ind <- ind %>% 
+  mutate(
+    IndicatorName = str_replace_all(IndicatorName, " ", "_")
+  )
 ind_names <- ind$CountryName %>% unique()
 data_names <- data$name
 
@@ -108,6 +112,12 @@ write_tsv(ind_grp, "grouped.tsv")
 # grouped %>% mutate(
 # )
 # write_tsv(grouped, "grouped.tsv")
+
+ind_grp <- ind_grp %>% rename(
+  name = CountryName
+)
+final_data <- data %>% full_join(ind_grp)
+write_tsv(final_data, "my_data.tsv")
 ```
 
 ```{python}
