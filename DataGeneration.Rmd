@@ -7,6 +7,7 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+# Why is this shit so broken?
 library(tidyverse)
 ```
 
@@ -35,9 +36,83 @@ data_names %>% length()
 overlap_names <- intersect(ind_names, data_names)
 
 overlap_names %>% length()
+ind <- ind %>% filter(CountryName %in% overlap_names)
+```
+
+```{r}
+ind %>% group_by(IndicatorName) %>% 
+  summarise(
+    n = n()
+  ) %>% arrange(-n)
+
+# ind %>% group_by(IndicatorName, CountryName) %>% 
+#   summarise(
+#     val = mean(Value)
+#   )
+
+country_count <- ind %>% group_by(IndicatorName, CountryName) %>%
+  summarise(
+    n = n()
+  ) %>% 
+  ungroup() %>% 
+  group_by(IndicatorName) %>% 
+  summarise(
+    n = n()
+  )
+country_count %>% arrange(-n)
+country_count$n %>% hist()
+
+ind_more_140 <- country_count %>% filter(n > 170) %>% select(IndicatorName)
 ```
 
 
+```{r}
+# ind %>% group_by(CountryName) %>% 
+#   summarise(
+#     
+#   )
+
+# ind$IndicatorName
+# ind$Value
+ind$IndicatorName %>% unique()
+
+ind2 <- ind %>% filter(IndicatorName %in% ind_more_140$IndicatorName)
+
+grouped <- ind2 %>% 
+  select(CountryName, IndicatorName, Value) %>% 
+  pivot_wider(
+  names_from = IndicatorName,
+  values_from = Value,
+  values_fill = NA
+)
+
+# grouped %>% mutate_all(
+#   map_chr(., toString)
+# )
+
+# grouped %>% mutate_if(
+#   
+# )
+
+listToChar <- function(x) map_chr(x, toString)
+
+ind_grp <- grouped %>% mutate_at(
+  vars(-CountryName),
+  listToChar
+)
+write_tsv(ind_grp, "grouped.tsv")
+
+# grouped %>% mutate(
+#   `Adolescent fertility rate (births per 1,000 women ages 15-19)` = map_chr(`Adolescent fertility rate (births per 1,000 women ages 15-19)`, toString)
+# )
+# grouped %>% mutate(
+# )
+# write_tsv(grouped, "grouped.tsv")
+```
+
+```{python}
+
+```
 
 
 
