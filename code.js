@@ -76,14 +76,14 @@ function setAngles() {
 }
 
 function scale() {
-  width = document.documentElement.clientWidth * 0.7;
+  width = document.documentElement.clientWidth * 0.5;
   height = document.documentElement.clientHeight;
   canvas.attr("width", width).attr("height", height);
   projection
     .scale((scaleFactor * Math.min(width, height)) / 2)
     .translate([width / 2, height / 2]);
   
-  width2 = document.documentElement.clientWidth * 0.29;
+  width2 = document.documentElement.clientWidth * 0.49;
   height2 = document.documentElement.clientHeight * 0.7;
   canvas3.attr("width", width2).attr("height", height2);
   canvas3.style("background-color", "#ff000030");

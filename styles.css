@@ -12,7 +12,7 @@ body {
 
 #globe {
   cursor: move;
-  width: 70%;
+  width: 50%;
   border: 1px solid red;
 }
 
@@ -25,7 +25,7 @@ body {
 }
 
 #box {
-  width: 29vw;
+  width: 49vw;
   border: 1px solid blue;
   height: 100vh;
 }
