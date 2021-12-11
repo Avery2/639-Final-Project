@@ -72,7 +72,8 @@ function makeHistogram(country) {
 
   var x = d3
     .scaleLinear()
-    .domain([0, 1000]) // can use this instead of 1000 to have the max of data: d3.max(data, function(d) { return +d.price })
+    // .domain([0, 1000]) // can use this instead of 1000 to have the max of data: d3.max(data, function(d) { return +d.price })
+    .domain([0, d3.max(data, function(d) { return +d.price })]) // can use this instead of 1000 to have the max of data: 
     .range([0, width]);
   svg
     .append("g")
