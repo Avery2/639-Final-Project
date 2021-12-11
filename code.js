@@ -28,8 +28,8 @@ function enter(country) {
   current.text(
     "NAME: " +
       (country && country.name) +
-      " " +
-      (country && country.Urban_population) +
+      // " " +
+      // (country && country.Urban_population) +
       "" || ""
   );
   makeHistogram(country);

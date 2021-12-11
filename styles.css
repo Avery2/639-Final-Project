@@ -16,7 +16,7 @@ body {
   border: 1px solid red;
 }
 
-#info {
+.info {
   width: auto;
   height: auto;
   /* position: relative; TODO: May have to add this to box (parent container)*/
