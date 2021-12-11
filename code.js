@@ -56,16 +56,18 @@ function makeHistogram(country) {
   function (data) {
   // X axis: scale and draw:
 
-  // console.log({ data });
-  // var my_data = country.Urban_population
+  console.log({ data });
+  var my_data = country.Urban_population
   // console.log({my_data})
-  // var trans_data = my_data.map(function (e) {
-  //   return {"value": e}
-  // })
-  // var data = country.Urban_population.map(function (e) {
+  var trans_data = my_data.map(function (e) {
+    return {"price": (e/10000).toString()}
+  })
+  var data = trans_data
+  // var my_data = country.Urban_population.map(function (e) {
   //   return { value: e };
   // });
-  // console.log({ trans_data });
+  // console.log({my_data})
+  console.log({ trans_data });
   // console.log({ data });
 
   var x = d3
