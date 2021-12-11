@@ -42,13 +42,29 @@ function makeHistogram(country) {
     height = 400 - margin.top - margin.bottom;
 
   // append the svg object to the body of the page
-  var svg = d3
+  var svg = d3.select("svg > g");
+
+  if(svg.empty()){
+    // svg = d3.select(this).append("svg:svg").attr("width", width)
+    //         .attr("height", height)
+    //         .append("svg:g")
+    //         .attr("transform", "translate(" + (width - r) / 2 + "," + (height - r) / 2 + ")");
+    var svg = d3
     .select("#my_dataviz")
     .append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+}
+
+  // var svg = d3
+  //   .select("#my_dataviz")
+  //   .append("svg")
+  //   .attr("width", width + margin.left + margin.right)
+  //   .attr("height", height + margin.top + margin.bottom)
+  //   .append("g")
+  //   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
   // get the data
   d3.csv(
@@ -126,12 +142,17 @@ function makeHistogram(country) {
 
 function leave(country) {
   current.text("");
+  d3
+    .select("#my_dataviz")
+    .select("svg")
+    .remove();
 }
 
 //
 // Variables
 //
 
+// var hist = d3.select("#my_dataviz")
 var current = d3.select("#current");
 var canvas = d3.select("#globe");
 var canvas2 = d3.select("#box");
