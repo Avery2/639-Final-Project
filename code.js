@@ -76,7 +76,7 @@ function makeHistogram(country) {
   var my_data = country.Urban_population
   // console.log({my_data})
   var trans_data = my_data.map(function (e) {
-    return {"price": (e/10000).toString()}
+    return {"price": e.toString()}
   })
   var data = trans_data
   // var my_data = country.Urban_population.map(function (e) {
@@ -104,7 +104,7 @@ function makeHistogram(country) {
       // return d.value;
     }) // I need to give the vector of value
     .domain(x.domain()) // then the domain of the graphic
-    .thresholds(x.ticks(70)); // then the numbers of bins
+    .thresholds(x.ticks(data.length / 4 | 0)); // then the numbers of bins
 
   // And apply this function to data to get the bins
   var bins = histogram(data);
