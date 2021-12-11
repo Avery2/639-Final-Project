@@ -32,6 +32,93 @@ function enter(country) {
       (country && country.Urban_population) +
       "" || ""
   );
+  makeHistogram(country);
+}
+
+function makeHistogram(country) {
+  // set the dimensions and margins of the graph
+  var margin = { top: 10, right: 30, bottom: 30, left: 40 },
+    width = 460 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
+
+  // append the svg object to the body of the page
+  var svg = d3
+    .select("#my_dataviz")
+    .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+  // get the data
+  d3.csv(
+  "https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/1_OneNum.csv",
+  function (data) {
+  // X axis: scale and draw:
+
+  // console.log({ data });
+  // var my_data = country.Urban_population
+  // console.log({my_data})
+  // var trans_data = my_data.map(function (e) {
+  //   return {"value": e}
+  // })
+  // var data = country.Urban_population.map(function (e) {
+  //   return { value: e };
+  // });
+  // console.log({ trans_data });
+  // console.log({ data });
+
+  var x = d3
+    .scaleLinear()
+    .domain([0, 1000]) // can use this instead of 1000 to have the max of data: d3.max(data, function(d) { return +d.price })
+    .range([0, width]);
+  svg
+    .append("g")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(x));
+
+  // set the parameters for the histogram
+  var histogram = d3
+    .histogram()
+    .value(function (d) {
+      return d.price;
+      // return d.value;
+    }) // I need to give the vector of value
+    .domain(x.domain()) // then the domain of the graphic
+    .thresholds(x.ticks(70)); // then the numbers of bins
+
+  // And apply this function to data to get the bins
+  var bins = histogram(data);
+
+  // Y axis: scale and draw:
+  var y = d3.scaleLinear().range([height, 0]);
+  y.domain([
+    0,
+    d3.max(bins, function (d) {
+      return d.length;
+    }),
+  ]); // d3.hist has to be called before the Y axis obviously
+  svg.append("g").call(d3.axisLeft(y));
+
+  // append the bar rectangles to the svg element
+  svg
+    .selectAll("rect")
+    .data(bins)
+    .enter()
+    .append("rect")
+    .attr("x", 1)
+    .attr("transform", function (d) {
+      return "translate(" + x(d.x0) + "," + y(d.length) + ")";
+    })
+    .attr("width", function (d) {
+      return x(d.x1) - x(d.x0) - 1;
+    })
+    .attr("height", function (d) {
+      return height - y(d.length);
+    })
+    .style("fill", "#69b3a2");
+  }
+  );
 }
 
 function leave(country) {
@@ -82,19 +169,20 @@ function scale() {
   projection
     .scale((scaleFactor * Math.min(width, height)) / 2)
     .translate([width / 2, height / 2]);
-  
+
   width2 = document.documentElement.clientWidth * 0.49;
   height2 = document.documentElement.clientHeight * 0.7;
   canvas3.attr("width", width2).attr("height", height2);
   canvas3.style("background-color", "#ff000030");
   // var svg = canvas3.append("svg").attr("width", width2).attr("height", height2).style("position", "absolute").style("bottom", 0);
-  canvas3.append('rect')
-  .attr('x', 10)
-  .attr('y', 10)
-  .attr('width', 40)
-  .attr('height', 40)
-  .attr('stroke', 'black')
-  .attr('fill', '#ffffff');
+  canvas3
+    .append("rect")
+    .attr("x", 10)
+    .attr("y", 10)
+    .attr("width", 40)
+    .attr("height", 40)
+    .attr("stroke", "black")
+    .attr("fill", "#ffffff");
   render();
 }
 
@@ -250,16 +338,16 @@ loadData(function (world, cList) {
   countries = topojson.feature(world, world.objects.countries);
   countryList = cList;
   for (c in cList) {
-    c_ = cList[c]
+    c_ = cList[c];
     for (v in c_) {
       if (c_[v] != undefined && !["id", "name"].includes(v)) {
         // console.log(`${v}: ${c_[v]}`)
-        var str_val = c_[v]
-        var my_list = str_val.split(",")
+        var str_val = c_[v];
+        var my_list = str_val.split(",");
         my_list = my_list.map(function (x) {
-          return parseInt(x.trim())
-        })
-        c_[v] = my_list
+          return parseInt(x.trim());
+        });
+        c_[v] = my_list;
         // console.log(`${v}: ${my_list.length}`)
       }
     }
