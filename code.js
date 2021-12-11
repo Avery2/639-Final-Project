@@ -72,7 +72,7 @@ function makeHistogram(country) {
   function (data) {
   // X axis: scale and draw:
 
-  console.log({ data });
+  // console.log({ data });
   var my_data = country.Urban_population
   // console.log({my_data})
   var trans_data = my_data.map(function (e) {
@@ -83,7 +83,7 @@ function makeHistogram(country) {
   //   return { value: e };
   // });
   // console.log({my_data})
-  console.log({ trans_data });
+  // console.log({ trans_data });
   // console.log({ data });
 
   var x = d3
@@ -376,7 +376,7 @@ loadData(function (world, cList) {
       }
     }
   }
-  console.log({ countryList });
+  // console.log({ countryList });
 
   window.addEventListener("resize", scale);
   scale();
