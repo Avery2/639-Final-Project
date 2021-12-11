@@ -32,7 +32,7 @@ function enter(country) {
       // (country && country.Urban_population) +
       "" || ""
   );
-  makeHistogram(country);
+  // makeHistogram(country);
 }
 
 function makeHistogram(country) {
@@ -142,6 +142,10 @@ function makeHistogram(country) {
 
 function leave(country) {
   current.text("");
+  // clearHist();
+}
+
+function clearHist() {
   d3
     .select("#my_dataviz")
     .select("svg")
@@ -321,9 +325,20 @@ function mousemove() {
 }
 
 function selectOnClick() {
-  var c = getCountry(this);
+  var cp = getCountry(this);
   console.log("selectOnClick");
-  console.log({ c });
+  // console.log({ cp });
+
+  // console.log({countryList})
+  var country = countryList.find(function (c) {
+    // console.log({c})
+    return parseInt(c.id, 10) === parseInt(cp.id, 10);
+  });
+
+  // console.log({country})
+
+  clearHist();
+  makeHistogram(country);
 }
 
 function getCountry(event) {
