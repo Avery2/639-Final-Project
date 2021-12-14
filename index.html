@@ -7,14 +7,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <!-- <link rel="stylesheet" href="styles.css"></link> -->
   <script>
     var script = document.createElement('link');
     script.setAttribute('href', 'styles.css?id=' + (new Date()).getTime());
     script.setAttribute('rel', 'stylesheet');
     document.head.appendChild(script);
   </script>
-  <!-- <script src="https://d3js.org/d3.v7.min.js"></script> -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.2/d3.min.js"></script>
   <script src="https://d3js.org/d3-geo.v1.min.js"></script>
   <script src="https://d3js.org/topojson.v2.min.js"></script>
@@ -22,19 +20,23 @@
 </head>
 
 <body>
+  <h2 id="current"></h2>
   <canvas id="globe" class="container"></canvas>
   <div id="box" class="container">
-    <h2 id="current"></h2>
-    <canvas id="info"></canvas>
-    <label>Choose data type:</label>
-    <select id="selectButton">
-      <option value="Country">Country</option>
-      <option value="Continent">Contient</option>
-      <Option value="Developed">Developed</option>
-      <Option value="Underdeveloped">Under Developed</Option>
+    <div id="my_dataviz" class="info"></div>
+    <label for="chartSelect">Chart Type</label>
+    <select id="chartSelect">
+      <option value="1">1</option>
+      <option value="2">2</option>
     </select>
+    <label for="groupSelect">Group</label>
+    <select id="groupSelect">
+      <option value="1">1</option>
+      <option value="2">2</option>
+    </select>
+    <p id="selected1"></p>
+    <p id="selected2"></p>
   </div>
-  <!-- <script src="code.js"></script> -->
   <script>
     var script2 = document.createElement('script');
     script2.setAttribute('src', 'code.js?id=' + (new Date()).getTime());
@@ -42,7 +44,5 @@
   </script>
 
 </body>
-
-<!-- <script src="bar.js"></script> -->
 
 </html>

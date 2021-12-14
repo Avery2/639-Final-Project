@@ -2,8 +2,8 @@ html,
 body {
   margin: 0;
   padding: 0;
-  background: #222;
-  color: white;
+  background: black;
+  color: black;
 }
 
 .container {
@@ -13,10 +13,9 @@ body {
 #globe {
   cursor: move;
   width: 50%;
-  border: 1px solid red;
 }
 
-#info {
+.info {
   width: auto;
   height: auto;
   /* position: relative; TODO: May have to add this to box (parent container)*/
@@ -26,8 +25,8 @@ body {
 
 #box {
   width: 49vw;
-  border: 1px solid blue;
   height: 100vh;
+  background-color: white;
 }
 
 #current {
@@ -36,4 +35,19 @@ body {
   font-family: sans-serif;
   margin-left: 4%;
   margin-top: 4%;
+}
+
+#selected1 {
+  color: black;
+  font-family: sans-serif;
+}
+
+#selected2 {
+  color: black;
+  font-family: sans-serif;
+}
+
+#my_dataviz {
+  background-color: #eee;
+  color: black;
 }

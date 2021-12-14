@@ -15,6 +15,7 @@ var colorWater = "#4C86A8";
 var colorLand = "#BDC696";
 var colorGraticule = "#ccc";
 var colorCountry = "#a00";
+var colorSelected = colorCountry; //"#2b8cbe"
 
 //
 // Handler
@@ -25,12 +26,149 @@ function enter(country) {
   var country = countryList.find(function (c) {
     return parseInt(c.id, 10) === parseInt(country.id, 10);
   });
-  current.text(
-    "NAME: " +
-      (country && country.name) +
-      " " +
-      (country && country.Urban_population) +
-      "" || ""
+  current.text("" + (country && country.name) + "" || "");
+}
+
+function makeHistogram(country) {
+  // set the dimensions and margins of the graph
+  var margin = { top: 10, right: 30, bottom: 30, left: 40 },
+    width = 460 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
+
+  // append the svg object to the body of the page
+  var svg = d3.select("svg > g");
+
+  if (svg.empty()) {
+    var svg = d3
+      .select("#my_dataviz")
+      .append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    svg.append("text");
+  }
+
+  // get the data
+  d3.csv("", function (data) {
+    // X axis: scale and draw:
+
+    var my_data = country.Urban_population;
+    var trans_data = my_data.map(function (e) {
+      return { val: e.toString() };
+    });
+    var data = trans_data;
+
+    if (data.length == 1) {
+      d3.select("#my_dataviz").select("text").text("This country does not have the requested data.")
+        .attr("transform", "translate(0," + height/2 + ")")
+      return
+    }
+
+    var x = d3
+      .scaleLinear()
+      // .domain([0, 1000]) // can use this instead of 1000 to have the max of data: d3.max(data, function(d) { return +d.price })
+      .domain([
+        // 0,
+        d3.min(data, function (d) {
+          return +d.val;
+        }),
+        d3.max(data, function (d) {
+          return +d.val;
+        }),
+      ])
+      .range([0, width]);
+    svg
+      .append("g")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x));
+
+    // set the parameters for the histogram
+    var histogram = d3
+      .histogram()
+      .value(function (d) {
+        return d.val;
+      }) // I need to give the vector of value
+      .domain(x.domain()) // then the domain of the graphic
+      .thresholds(x.ticks((data.length / 4) | 0)); // then the numbers of bins
+
+    // And apply this function to data to get the bins
+    var bins = histogram(data);
+
+    // Y axis: scale and draw:
+    var y = d3.scaleLinear().range([height, 0]);
+    y.domain([
+      0,
+      d3.max(bins, function (d) {
+        return d.length;
+      }),
+    ]); // d3.hist has to be called before the Y axis obviously
+    svg.append("g").call(d3.axisLeft(y));
+
+    // append the bar rectangles to the svg element
+    svg
+      .selectAll("rect")
+      .data(bins)
+      .enter()
+      .append("rect")
+      .attr("x", 1)
+      .attr("transform", function (d) {
+        return "translate(" + x(d.x0) + "," + y(d.length) + ")";
+      })
+      .attr("width", function (d) {
+        return x(d.x1) - x(d.x0) - 1;
+      })
+      .attr("height", function (d) {
+        return height - y(d.length);
+      })
+      .style("fill", "#69b3a2");
+  });
+}
+
+function makeScatterPlot(country) {
+  var margin = { top: 10, right: 30, bottom: 30, left: 60 },
+    width = 460 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
+
+  var svg = d3
+    .select("#my_dataviz")
+    .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+  d3.csv(
+    "https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/2_TwoNum.csv",
+    function (data) {
+      // Add X axis
+      var x = d3.scaleLinear().domain([0, 4000]).range([0, width]);
+      svg
+        .append("g")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(x));
+
+      // Add Y axis
+      var y = d3.scaleLinear().domain([0, 500000]).range([height, 0]);
+      svg.append("g").call(d3.axisLeft(y));
+
+      // Add dots
+      svg
+        .append("g")
+        .selectAll("dot")
+        .data(data)
+        .enter()
+        .append("circle")
+        .attr("cx", function (d) {
+          return x(d.GrLivArea);
+        })
+        .attr("cy", function (d) {
+          return y(d.SalePrice);
+        })
+        .attr("r", 1.5)
+        .style("fill", "#69b3a2");
+    }
   );
 }
 
@@ -38,11 +176,19 @@ function leave(country) {
   current.text("");
 }
 
+function clearHist() {
+  d3.select("#my_dataviz").select("svg").remove();
+}
+
 //
 // Variables
 //
 
+// var hist = d3.select("#my_dataviz")
 var current = d3.select("#current");
+var selected1 = d3.select("#selected1");
+var selected2 = d3.select("#selected2");
+var chartSelect = d3.select("#chartSelect");
 var canvas = d3.select("#globe");
 var canvas2 = d3.select("#box");
 var canvas3 = d3.select("#info");
@@ -62,6 +208,8 @@ var land, countries;
 var countryList;
 var autorotate, now, diff, roation;
 var currentCountry;
+var selectedCountry1;
+var selectedCountry2;
 
 //
 // Functions
@@ -82,19 +230,19 @@ function scale() {
   projection
     .scale((scaleFactor * Math.min(width, height)) / 2)
     .translate([width / 2, height / 2]);
-  
+
   width2 = document.documentElement.clientWidth * 0.49;
   height2 = document.documentElement.clientHeight * 0.7;
   canvas3.attr("width", width2).attr("height", height2);
   canvas3.style("background-color", "#ff000030");
-  // var svg = canvas3.append("svg").attr("width", width2).attr("height", height2).style("position", "absolute").style("bottom", 0);
-  canvas3.append('rect')
-  .attr('x', 10)
-  .attr('y', 10)
-  .attr('width', 40)
-  .attr('height', 40)
-  .attr('stroke', 'black')
-  .attr('fill', '#ffffff');
+  canvas3
+    .append("rect")
+    .attr("x", 10)
+    .attr("y", 10)
+    .attr("width", 40)
+    .attr("height", 40)
+    .attr("stroke", "black")
+    .attr("fill", "#ffffff");
   render();
 }
 
@@ -132,6 +280,9 @@ function render() {
   fill(land, colorLand);
   if (currentCountry) {
     fill(currentCountry, colorCountry);
+  }
+  if (selectedCountry1) {
+    fill(selectedCountry1, colorSelected);
   }
 }
 
@@ -209,9 +360,31 @@ function mousemove() {
 }
 
 function selectOnClick() {
-  var c = getCountry(this);
+  var cp = getCountry(this);
   console.log("selectOnClick");
-  console.log({ c });
+
+  var country = countryList.find(function (c) {
+    return parseInt(c.id, 10) === parseInt(cp.id, 10);
+  });
+
+  doCharts(country);
+
+  selectedCountry1 = cp;
+  render();
+
+  // selection titles
+  selected1.text("Select 1: " + (country && country.name) + "" || "");
+}
+
+function doCharts(country) {
+  var chartType = chartSelect.node().value;
+  if (chartType == "1") {
+    clearHist();
+    makeHistogram(country);
+  } else if (chartType == "2") {
+    clearHist();
+    makeScatterPlot(country);
+  }
 }
 
 function getCountry(event) {
@@ -243,30 +416,33 @@ canvas
   .on("mousemove", mousemove)
   .on("click", selectOnClick);
 
-// canvas.on("onclick", selectOnClick)
-
 loadData(function (world, cList) {
   land = topojson.feature(world, world.objects.land);
   countries = topojson.feature(world, world.objects.countries);
   countryList = cList;
   for (c in cList) {
-    c_ = cList[c]
+    c_ = cList[c];
     for (v in c_) {
       if (c_[v] != undefined && !["id", "name"].includes(v)) {
-        // console.log(`${v}: ${c_[v]}`)
-        var str_val = c_[v]
-        var my_list = str_val.split(",")
+        var str_val = c_[v];
+        var my_list = str_val.split(",");
         my_list = my_list.map(function (x) {
-          return parseInt(x.trim())
-        })
-        c_[v] = my_list
-        // console.log(`${v}: ${my_list.length}`)
+          return parseInt(x.trim());
+        });
+        c_[v] = my_list;
       }
     }
   }
-  console.log({ countryList });
 
   window.addEventListener("resize", scale);
   scale();
   autorotate = d3.timer(rotate);
+});
+
+// handle on click event
+d3.select("#chartSelect").on("change", function () {
+  var country = countryList.find(function (c) {
+    return parseInt(c.id, 10) === parseInt(selectedCountry1.id, 10);
+  });
+  doCharts(country);
 });
