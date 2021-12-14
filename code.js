@@ -17,6 +17,9 @@ var colorGraticule = "#ccc";
 var colorCountry = "#a00";
 var colorSelected = colorCountry; //"#2b8cbe"
 
+var visHeight = screen.height * 0.4;
+var visWidth = screen.width * 0.5 | 0;
+
 //
 // Handler
 //
@@ -32,8 +35,8 @@ function enter(country) {
 function makeHistogram(country) {
   // set the dimensions and margins of the graph
   var margin = { top: 10, right: 30, bottom: 30, left: 40 },
-    width = 460 - margin.left - margin.right,
-    height = 400 - margin.top - margin.bottom;
+    width = visWidth - margin.left - margin.right,
+    height = visHeight - margin.top - margin.bottom;
 
   // append the svg object to the body of the page
   var svg = d3.select("svg > g");
@@ -128,8 +131,8 @@ function makeHistogram(country) {
 
 function makeScatterPlot(country) {
   var margin = { top: 10, right: 30, bottom: 30, left: 60 },
-    width = 460 - margin.left - margin.right,
-    height = 400 - margin.top - margin.bottom;
+    width = visWidth - margin.left - margin.right,
+    height = visHeight - margin.top - margin.bottom;
 
   var svg = d3
     .select("#my_dataviz")
