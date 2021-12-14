@@ -53,13 +53,13 @@ function makeHistogram(country) {
 
   // get the data
   d3.csv(
-    "https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/1_OneNum.csv",
+    "",
     function (data) {
       // X axis: scale and draw:
 
       var my_data = country.Urban_population;
       var trans_data = my_data.map(function (e) {
-        return { price: e.toString() };
+        return { val: e.toString() };
       });
       var data = trans_data;
 
@@ -67,11 +67,14 @@ function makeHistogram(country) {
         .scaleLinear()
         // .domain([0, 1000]) // can use this instead of 1000 to have the max of data: d3.max(data, function(d) { return +d.price })
         .domain([
-          0,
-          d3.max(data, function (d) {
-            return +d.price;
+          // 0,
+          d3.min(data, function (d) {
+            return +d.val;
           }),
-        ]) // can use this instead of 1000 to have the max of data:
+          d3.max(data, function (d) {
+            return +d.val;
+          }),
+        ])
         .range([0, width]);
       svg
         .append("g")
@@ -82,8 +85,7 @@ function makeHistogram(country) {
       var histogram = d3
         .histogram()
         .value(function (d) {
-          return d.price;
-          // return d.value;
+          return d.val;
         }) // I need to give the vector of value
         .domain(x.domain()) // then the domain of the graphic
         .thresholds(x.ticks((data.length / 4) | 0)); // then the numbers of bins
