@@ -13,7 +13,6 @@ body {
 #globe {
   cursor: move;
   width: 50%;
-  /* border: 1px solid red; */
 }
 
 .info {
@@ -36,4 +35,20 @@ body {
   font-family: sans-serif;
   margin-left: 4%;
   margin-top: 4%;
+}
+
+#selected1 {
+  position: absolute;
+  color: black;
+  font-family: sans-serif;
+  margin-left: 4%;
+  margin-top: 8%;
+}
+
+#selected2 {
+  position: absolute;
+  color: black;
+  font-family: sans-serif;
+  margin-left: 4%;
+  margin-top: 12%;
 }

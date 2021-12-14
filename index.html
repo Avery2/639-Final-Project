@@ -7,14 +7,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <!-- <link rel="stylesheet" href="styles.css"></link> -->
   <script>
     var script = document.createElement('link');
     script.setAttribute('href', 'styles.css?id=' + (new Date()).getTime());
     script.setAttribute('rel', 'stylesheet');
     document.head.appendChild(script);
   </script>
-  <!-- <script src="https://d3js.org/d3.v7.min.js"></script> -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.2/d3.min.js"></script>
   <script src="https://d3js.org/d3-geo.v1.min.js"></script>
   <script src="https://d3js.org/topojson.v2.min.js"></script>
@@ -25,9 +23,13 @@
   <canvas id="globe" class="container"></canvas>
   <div id="box" class="container">
     <div id="my_dataviz" class="info"></div>
-    <!-- <div id="my_dataviz"></div> -->
     <h2 id="current"></h2>
-    <!-- <canvas class="info"></canvas> -->
+    <h2 id="selected1"></h2>
+    <h2 id="selected2"></h2>
+    <select id="chartSelect">
+      <option value="1">1</option>
+      <option value="2">2</option>
+    </select>
     </select>
   </div>
   <script>
@@ -37,4 +39,5 @@
   </script>
 
 </body>
+
 </html>

@@ -15,6 +15,7 @@ var colorWater = "#4C86A8";
 var colorLand = "#BDC696";
 var colorGraticule = "#ccc";
 var colorCountry = "#a00";
+var colorSelected = colorCountry; //"#2b8cbe"
 
 //
 // Handler
@@ -25,11 +26,7 @@ function enter(country) {
   var country = countryList.find(function (c) {
     return parseInt(c.id, 10) === parseInt(country.id, 10);
   });
-  current.text(
-    "NAME: " +
-      (country && country.name) +
-      "" || ""
-  );
+  current.text("NAME: " + (country && country.name) + "" || "");
 }
 
 function makeHistogram(country) {
@@ -52,76 +49,73 @@ function makeHistogram(country) {
   }
 
   // get the data
-  d3.csv(
-    "",
-    function (data) {
-      // X axis: scale and draw:
+  d3.csv("", function (data) {
+    // X axis: scale and draw:
 
-      var my_data = country.Urban_population;
-      var trans_data = my_data.map(function (e) {
-        return { val: e.toString() };
-      });
-      var data = trans_data;
+    var my_data = country.Urban_population;
+    var trans_data = my_data.map(function (e) {
+      return { val: e.toString() };
+    });
+    var data = trans_data;
 
-      var x = d3
-        .scaleLinear()
-        // .domain([0, 1000]) // can use this instead of 1000 to have the max of data: d3.max(data, function(d) { return +d.price })
-        .domain([
-          // 0,
-          d3.min(data, function (d) {
-            return +d.val;
-          }),
-          d3.max(data, function (d) {
-            return +d.val;
-          }),
-        ])
-        .range([0, width]);
-      svg
-        .append("g")
-        .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(x));
-
-      // set the parameters for the histogram
-      var histogram = d3
-        .histogram()
-        .value(function (d) {
-          return d.val;
-        }) // I need to give the vector of value
-        .domain(x.domain()) // then the domain of the graphic
-        .thresholds(x.ticks((data.length / 4) | 0)); // then the numbers of bins
-
-      // And apply this function to data to get the bins
-      var bins = histogram(data);
-
-      // Y axis: scale and draw:
-      var y = d3.scaleLinear().range([height, 0]);
-      y.domain([
-        0,
-        d3.max(bins, function (d) {
-          return d.length;
+    var x = d3
+      .scaleLinear()
+      // .domain([0, 1000]) // can use this instead of 1000 to have the max of data: d3.max(data, function(d) { return +d.price })
+      .domain([
+        // 0,
+        d3.min(data, function (d) {
+          return +d.val;
         }),
-      ]); // d3.hist has to be called before the Y axis obviously
-      svg.append("g").call(d3.axisLeft(y));
+        d3.max(data, function (d) {
+          return +d.val;
+        }),
+      ])
+      .range([0, width]);
+    svg
+      .append("g")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x));
 
-      // append the bar rectangles to the svg element
-      svg
-        .selectAll("rect")
-        .data(bins)
-        .enter()
-        .append("rect")
-        .attr("x", 1)
-        .attr("transform", function (d) {
-          return "translate(" + x(d.x0) + "," + y(d.length) + ")";
-        })
-        .attr("width", function (d) {
-          return x(d.x1) - x(d.x0) - 1;
-        })
-        .attr("height", function (d) {
-          return height - y(d.length);
-        })
-        .style("fill", "#69b3a2");
-    }
-  );
+    // set the parameters for the histogram
+    var histogram = d3
+      .histogram()
+      .value(function (d) {
+        return d.val;
+      }) // I need to give the vector of value
+      .domain(x.domain()) // then the domain of the graphic
+      .thresholds(x.ticks((data.length / 4) | 0)); // then the numbers of bins
+
+    // And apply this function to data to get the bins
+    var bins = histogram(data);
+
+    // Y axis: scale and draw:
+    var y = d3.scaleLinear().range([height, 0]);
+    y.domain([
+      0,
+      d3.max(bins, function (d) {
+        return d.length;
+      }),
+    ]); // d3.hist has to be called before the Y axis obviously
+    svg.append("g").call(d3.axisLeft(y));
+
+    // append the bar rectangles to the svg element
+    svg
+      .selectAll("rect")
+      .data(bins)
+      .enter()
+      .append("rect")
+      .attr("x", 1)
+      .attr("transform", function (d) {
+        return "translate(" + x(d.x0) + "," + y(d.length) + ")";
+      })
+      .attr("width", function (d) {
+        return x(d.x1) - x(d.x0) - 1;
+      })
+      .attr("height", function (d) {
+        return height - y(d.length);
+      })
+      .style("fill", "#69b3a2");
+  });
 }
 
 function makeScatterPlot(country) {
@@ -184,6 +178,9 @@ function clearHist() {
 
 // var hist = d3.select("#my_dataviz")
 var current = d3.select("#current");
+var selected1 = d3.select("#selected1");
+var selected2 = d3.select("#selected2");
+var chartSelect = d3.select("#chartSelect");
 var canvas = d3.select("#globe");
 var canvas2 = d3.select("#box");
 var canvas3 = d3.select("#info");
@@ -203,6 +200,8 @@ var land, countries;
 var countryList;
 var autorotate, now, diff, roation;
 var currentCountry;
+var selectedCountry1;
+var selectedCountry2;
 
 //
 // Functions
@@ -273,6 +272,11 @@ function render() {
   fill(land, colorLand);
   if (currentCountry) {
     fill(currentCountry, colorCountry);
+  }
+  if (selectedCountry1) {
+    // console.log("fill selected country")
+    // console.log({selectedCountry1})
+    fill(selectedCountry1, colorSelected);
   }
 }
 
@@ -359,9 +363,22 @@ function selectOnClick() {
 
   // TODO: Multiple selection
 
-  clearHist();
-  makeHistogram(country);
-  // makeScatterPlot(country);
+  var chartType = chartSelect.node().value;
+  // console.log({chartType})
+
+  if (chartType == "1") {
+    clearHist();
+    makeHistogram(country);
+  } else if (chartType == "2") {
+    clearHist();
+    makeScatterPlot(country);
+  }
+
+  selectedCountry1 = cp;
+  render();
+
+  // selection titles
+  selected1.text("SELECTED: " + (country && country.name) + "" || "");
 }
 
 function getCountry(event) {
