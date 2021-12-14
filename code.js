@@ -20,7 +20,7 @@ var colorSelected = colorCountry; //"#2b8cbe"
 // var visHeight = screen.height * 0.4;
 // var visWidth = screen.width * 0.5 | 0;
 var visHeight = window.innerHeight * 0.4;
-var visWidth = window.innerWidth * 0.5 | 0;
+var visWidth = (window.innerWidth * 0.5) | 0;
 
 //
 // Variables
@@ -31,6 +31,7 @@ var current = d3.select("#current");
 var selected1 = d3.select("#selected1");
 var selected2 = d3.select("#selected2");
 var chartSelect = d3.select("#chartSelect");
+var groupSelect = d3.select("#groupSelect");
 var canvas = d3.select("#globe");
 var canvas2 = d3.select("#box");
 var canvas3 = d3.select("#info");
@@ -74,7 +75,6 @@ function clearHist() {
   d3.select("#my_dataviz").select("svg").remove();
 }
 
-
 //
 // Functions
 //
@@ -111,9 +111,11 @@ function makeHistogram(country) {
     var data = trans_data;
 
     if (data.length == 1) {
-      d3.select("#my_dataviz").select("text").text("This country does not have the requested data.")
-        .attr("transform", "translate(0," + height/2 + ")")
-      return
+      d3.select("#my_dataviz")
+        .select("text")
+        .text("This country does not have the requested data.")
+        .attr("transform", "translate(0," + height / 2 + ")");
+      return;
     }
 
     var x = d3
@@ -291,6 +293,9 @@ function render() {
   if (selectedCountry1) {
     fill(selectedCountry1, colorSelected);
   }
+  if (selectedCountry2) {
+    fill(selectedCountry2, colorSelected);
+  }
 }
 
 function fill(obj, color) {
@@ -376,11 +381,23 @@ function selectOnClick() {
 
   doCharts(country);
 
-  selectedCountry1 = cp;
+  var groupNum = groupSelect.node().value;
+
+  if (groupNum == "1") {
+    selectedCountry1 = cp;
+  }
+  if (groupNum == "2") {
+    selectedCountry2 = cp;
+  }
   render();
 
   // selection titles
-  selected1.text("Select 1: " + (country && country.name) + "" || "");
+  if (groupNum == "1") {
+    selected1.text("Select 1: " + (country && country.name) + "" || "");
+  }
+  if (groupNum == "2") {
+    selected2.text("Select 2: " + (country && country.name) + "" || "");
+  }
 }
 
 function doCharts(country) {
