@@ -26,7 +26,7 @@ function enter(country) {
   var country = countryList.find(function (c) {
     return parseInt(c.id, 10) === parseInt(country.id, 10);
   });
-  current.text("NAME: " + (country && country.name) + "" || "");
+  current.text("" + (country && country.name) + "" || "");
 }
 
 function makeHistogram(country) {
@@ -62,6 +62,7 @@ function makeHistogram(country) {
 
     if (data.length == 1) {
       d3.select("#my_dataviz").select("text").text("This country does not have the requested data.")
+        .attr("transform", "translate(0," + height/2 + ")")
       return
     }
 
@@ -281,8 +282,6 @@ function render() {
     fill(currentCountry, colorCountry);
   }
   if (selectedCountry1) {
-    // console.log("fill selected country")
-    // console.log({selectedCountry1})
     fill(selectedCountry1, colorSelected);
   }
 }
@@ -374,7 +373,7 @@ function selectOnClick() {
   render();
 
   // selection titles
-  selected1.text("SELECTED: " + (country && country.name) + "" || "");
+  selected1.text("Select 1: " + (country && country.name) + "" || "");
 }
 
 function doCharts(country) {

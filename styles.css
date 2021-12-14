@@ -31,28 +31,23 @@ body {
 
 #current {
   position: absolute;
-  color: black;
+  color: white;
   font-family: sans-serif;
   margin-left: 4%;
   margin-top: 4%;
 }
 
 #selected1 {
-  position: absolute;
   color: black;
   font-family: sans-serif;
-  margin-left: 4%;
-  margin-top: 8%;
 }
 
 #selected2 {
-  position: absolute;
   color: black;
   font-family: sans-serif;
-  margin-left: 4%;
-  margin-top: 12%;
 }
 
 #my_dataviz {
+  background-color: #eee;
   color: black;
 }
