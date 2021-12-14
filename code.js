@@ -361,11 +361,17 @@ function selectOnClick() {
     return parseInt(c.id, 10) === parseInt(cp.id, 10);
   });
 
-  // TODO: Multiple selection
+  doCharts(country);
 
+  selectedCountry1 = cp;
+  render();
+
+  // selection titles
+  selected1.text("SELECTED: " + (country && country.name) + "" || "");
+}
+
+function doCharts(country) {
   var chartType = chartSelect.node().value;
-  // console.log({chartType})
-
   if (chartType == "1") {
     clearHist();
     makeHistogram(country);
@@ -373,12 +379,6 @@ function selectOnClick() {
     clearHist();
     makeScatterPlot(country);
   }
-
-  selectedCountry1 = cp;
-  render();
-
-  // selection titles
-  selected1.text("SELECTED: " + (country && country.name) + "" || "");
 }
 
 function getCountry(event) {
@@ -431,4 +431,12 @@ loadData(function (world, cList) {
   window.addEventListener("resize", scale);
   scale();
   autorotate = d3.timer(rotate);
+});
+
+// handle on click event
+d3.select("#chartSelect").on("change", function () {
+  var country = countryList.find(function (c) {
+    return parseInt(c.id, 10) === parseInt(selectedCountry1.id, 10);
+  });
+  doCharts(country);
 });
