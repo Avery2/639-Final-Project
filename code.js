@@ -28,11 +28,8 @@ function enter(country) {
   current.text(
     "NAME: " +
       (country && country.name) +
-      // " " +
-      // (country && country.Urban_population) +
       "" || ""
   );
-  // makeHistogram(country);
 }
 
 function makeHistogram(country) {
@@ -44,163 +41,139 @@ function makeHistogram(country) {
   // append the svg object to the body of the page
   var svg = d3.select("svg > g");
 
-  if(svg.empty()){
-    // svg = d3.select(this).append("svg:svg").attr("width", width)
-    //         .attr("height", height)
-    //         .append("svg:g")
-    //         .attr("transform", "translate(" + (width - r) / 2 + "," + (height - r) / 2 + ")");
+  if (svg.empty()) {
     var svg = d3
+      .select("#my_dataviz")
+      .append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+  }
+
+  // get the data
+  d3.csv(
+    "https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/1_OneNum.csv",
+    function (data) {
+      // X axis: scale and draw:
+
+      var my_data = country.Urban_population;
+      var trans_data = my_data.map(function (e) {
+        return { price: e.toString() };
+      });
+      var data = trans_data;
+
+      var x = d3
+        .scaleLinear()
+        // .domain([0, 1000]) // can use this instead of 1000 to have the max of data: d3.max(data, function(d) { return +d.price })
+        .domain([
+          0,
+          d3.max(data, function (d) {
+            return +d.price;
+          }),
+        ]) // can use this instead of 1000 to have the max of data:
+        .range([0, width]);
+      svg
+        .append("g")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(x));
+
+      // set the parameters for the histogram
+      var histogram = d3
+        .histogram()
+        .value(function (d) {
+          return d.price;
+          // return d.value;
+        }) // I need to give the vector of value
+        .domain(x.domain()) // then the domain of the graphic
+        .thresholds(x.ticks((data.length / 4) | 0)); // then the numbers of bins
+
+      // And apply this function to data to get the bins
+      var bins = histogram(data);
+
+      // Y axis: scale and draw:
+      var y = d3.scaleLinear().range([height, 0]);
+      y.domain([
+        0,
+        d3.max(bins, function (d) {
+          return d.length;
+        }),
+      ]); // d3.hist has to be called before the Y axis obviously
+      svg.append("g").call(d3.axisLeft(y));
+
+      // append the bar rectangles to the svg element
+      svg
+        .selectAll("rect")
+        .data(bins)
+        .enter()
+        .append("rect")
+        .attr("x", 1)
+        .attr("transform", function (d) {
+          return "translate(" + x(d.x0) + "," + y(d.length) + ")";
+        })
+        .attr("width", function (d) {
+          return x(d.x1) - x(d.x0) - 1;
+        })
+        .attr("height", function (d) {
+          return height - y(d.length);
+        })
+        .style("fill", "#69b3a2");
+    }
+  );
+}
+
+function makeScatterPlot(country) {
+  var margin = { top: 10, right: 30, bottom: 30, left: 60 },
+    width = 460 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
+
+  var svg = d3
     .select("#my_dataviz")
     .append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-}
 
-  // var svg = d3
-  //   .select("#my_dataviz")
-  //   .append("svg")
-  //   .attr("width", width + margin.left + margin.right)
-  //   .attr("height", height + margin.top + margin.bottom)
-  //   .append("g")
-  //   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-  // get the data
   d3.csv(
-  "https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/1_OneNum.csv",
-  function (data) {
-  // X axis: scale and draw:
+    "https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/2_TwoNum.csv",
+    function (data) {
+      // Add X axis
+      var x = d3.scaleLinear().domain([0, 4000]).range([0, width]);
+      svg
+        .append("g")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(x));
 
-  // console.log({ data });
-  var my_data = country.Urban_population
-  // console.log({my_data})
-  var trans_data = my_data.map(function (e) {
-    return {"price": e.toString()}
-  })
-  var data = trans_data
-  // var my_data = country.Urban_population.map(function (e) {
-  //   return { value: e };
-  // });
-  // console.log({my_data})
-  // console.log({ trans_data });
-  // console.log({ data });
+      // Add Y axis
+      var y = d3.scaleLinear().domain([0, 500000]).range([height, 0]);
+      svg.append("g").call(d3.axisLeft(y));
 
-  var x = d3
-    .scaleLinear()
-    // .domain([0, 1000]) // can use this instead of 1000 to have the max of data: d3.max(data, function(d) { return +d.price })
-    .domain([0, d3.max(data, function(d) { return +d.price })]) // can use this instead of 1000 to have the max of data: 
-    .range([0, width]);
-  svg
-    .append("g")
-    .attr("transform", "translate(0," + height + ")")
-    .call(d3.axisBottom(x));
-
-  // set the parameters for the histogram
-  var histogram = d3
-    .histogram()
-    .value(function (d) {
-      return d.price;
-      // return d.value;
-    }) // I need to give the vector of value
-    .domain(x.domain()) // then the domain of the graphic
-    .thresholds(x.ticks(data.length / 4 | 0)); // then the numbers of bins
-
-  // And apply this function to data to get the bins
-  var bins = histogram(data);
-
-  // Y axis: scale and draw:
-  var y = d3.scaleLinear().range([height, 0]);
-  y.domain([
-    0,
-    d3.max(bins, function (d) {
-      return d.length;
-    }),
-  ]); // d3.hist has to be called before the Y axis obviously
-  svg.append("g").call(d3.axisLeft(y));
-
-  // append the bar rectangles to the svg element
-  svg
-    .selectAll("rect")
-    .data(bins)
-    .enter()
-    .append("rect")
-    .attr("x", 1)
-    .attr("transform", function (d) {
-      return "translate(" + x(d.x0) + "," + y(d.length) + ")";
-    })
-    .attr("width", function (d) {
-      return x(d.x1) - x(d.x0) - 1;
-    })
-    .attr("height", function (d) {
-      return height - y(d.length);
-    })
-    .style("fill", "#69b3a2");
-  }
+      // Add dots
+      svg
+        .append("g")
+        .selectAll("dot")
+        .data(data)
+        .enter()
+        .append("circle")
+        .attr("cx", function (d) {
+          return x(d.GrLivArea);
+        })
+        .attr("cy", function (d) {
+          return y(d.SalePrice);
+        })
+        .attr("r", 1.5)
+        .style("fill", "#69b3a2");
+    }
   );
-}
-
-function makeScatterPlot(country) {
-  
-
-
-var margin = {top: 10, right: 30, bottom: 30, left: 60},
-    width = 460 - margin.left - margin.right,
-    height = 400 - margin.top - margin.bottom;
-
-    var svg = d3.select("#my_dataviz")
-  .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform",
-          "translate(" + margin.left + "," + margin.top + ")");
-
-    d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/2_TwoNum.csv", function(data) {
-
-  // Add X axis
-  var x = d3.scaleLinear()
-    .domain([0, 4000])
-    .range([ 0, width ]);
-  svg.append("g")
-    .attr("transform", "translate(0," + height + ")")
-    .call(d3.axisBottom(x));
-
-  // Add Y axis
-  var y = d3.scaleLinear()
-    .domain([0, 500000])
-    .range([ height, 0]);
-  svg.append("g")
-    .call(d3.axisLeft(y));
-
-  // Add dots
-  svg.append('g')
-    .selectAll("dot")
-    .data(data)
-    .enter()
-    .append("circle")
-      .attr("cx", function (d) { return x(d.GrLivArea); } )
-      .attr("cy", function (d) { return y(d.SalePrice); } )
-      .attr("r", 1.5)
-      .style("fill", "#69b3a2")
-
-})
-
-
-
-
 }
 
 function leave(country) {
   current.text("");
-  // clearHist();
 }
 
 function clearHist() {
-  d3
-    .select("#my_dataviz")
-    .select("svg")
-    .remove();
+  d3.select("#my_dataviz").select("svg").remove();
 }
 
 //
@@ -253,7 +226,6 @@ function scale() {
   height2 = document.documentElement.clientHeight * 0.7;
   canvas3.attr("width", width2).attr("height", height2);
   canvas3.style("background-color", "#ff000030");
-  // var svg = canvas3.append("svg").attr("width", width2).attr("height", height2).style("position", "absolute").style("bottom", 0);
   canvas3
     .append("rect")
     .attr("x", 10)
@@ -378,19 +350,16 @@ function mousemove() {
 function selectOnClick() {
   var cp = getCountry(this);
   console.log("selectOnClick");
-  // console.log({ cp });
 
-  // console.log({countryList})
   var country = countryList.find(function (c) {
-    // console.log({c})
     return parseInt(c.id, 10) === parseInt(cp.id, 10);
   });
 
-  // console.log({country})
+  // TODO: Multiple selection
 
   clearHist();
-  //makeHistogram(country);
-  makeScatterPlot(country);
+  makeHistogram(country);
+  // makeScatterPlot(country);
 }
 
 function getCountry(event) {
@@ -422,8 +391,6 @@ canvas
   .on("mousemove", mousemove)
   .on("click", selectOnClick);
 
-// canvas.on("onclick", selectOnClick)
-
 loadData(function (world, cList) {
   land = topojson.feature(world, world.objects.land);
   countries = topojson.feature(world, world.objects.countries);
@@ -432,18 +399,15 @@ loadData(function (world, cList) {
     c_ = cList[c];
     for (v in c_) {
       if (c_[v] != undefined && !["id", "name"].includes(v)) {
-        // console.log(`${v}: ${c_[v]}`)
         var str_val = c_[v];
         var my_list = str_val.split(",");
         my_list = my_list.map(function (x) {
           return parseInt(x.trim());
         });
         c_[v] = my_list;
-        // console.log(`${v}: ${my_list.length}`)
       }
     }
   }
-  // console.log({ countryList });
 
   window.addEventListener("resize", scale);
   scale();
