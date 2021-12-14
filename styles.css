@@ -19,8 +19,8 @@ body {
   width: auto;
   height: auto;
   /* position: relative; TODO: May have to add this to box (parent container)*/
-  position: absolute;
-  bottom: 0;
+  /* position: absolute; */
+  /* bottom: 0; */
 }
 
 #box {
@@ -47,7 +47,7 @@ body {
   font-family: sans-serif;
 }
 
-#my_dataviz {
+#my_dataviz, #my_dataviz2 {
   background-color: #eee;
   color: black;
 }
