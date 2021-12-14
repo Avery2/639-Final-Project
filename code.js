@@ -46,6 +46,8 @@ function makeHistogram(country) {
       .attr("height", height + margin.top + margin.bottom)
       .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    svg.append("text");
   }
 
   // get the data
@@ -57,6 +59,11 @@ function makeHistogram(country) {
       return { val: e.toString() };
     });
     var data = trans_data;
+
+    if (data.length == 1) {
+      d3.select("#my_dataviz").select("text").text("This country does not have the requested data.")
+      return
+    }
 
     var x = d3
       .scaleLinear()
