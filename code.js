@@ -17,12 +17,46 @@ var colorGraticule = "#ccc";
 var colorCountry = "#a00";
 var colorSelected = colorCountry; //"#2b8cbe"
 
-var visHeight = screen.height * 0.4;
-var visWidth = screen.width * 0.5 | 0;
+// var visHeight = screen.height * 0.4;
+// var visWidth = screen.width * 0.5 | 0;
+var visHeight = window.innerHeight * 0.4;
+var visWidth = window.innerWidth * 0.5 | 0;
+
+//
+// Variables
+//
+
+// var hist = d3.select("#my_dataviz")
+var current = d3.select("#current");
+var selected1 = d3.select("#selected1");
+var selected2 = d3.select("#selected2");
+var chartSelect = d3.select("#chartSelect");
+var canvas = d3.select("#globe");
+var canvas2 = d3.select("#box");
+var canvas3 = d3.select("#info");
+var context = canvas.node().getContext("2d");
+var water = { type: "Sphere" };
+var projection = d3.geoOrthographic().precision(0.1);
+var graticule = d3.geoGraticule10();
+var path = d3.geoPath(projection).context(context);
+var v0; // Mouse position in Cartesian coordinates at start of drag gesture.
+var r0; // Projection rotation as Euler angles at start.
+var q0; // Projection rotation as versor at start.
+var lastTime = d3.now();
+var degPerMs = degPerSec / 1000;
+var width, height;
+var width2, height2;
+var land, countries;
+var countryList;
+var autorotate, now, diff, roation;
+var currentCountry;
+var selectedCountry1;
+var selectedCountry2;
 
 //
 // Handler
 //
+
 console.log("Starting...");
 
 function enter(country) {
@@ -31,6 +65,19 @@ function enter(country) {
   });
   current.text("" + (country && country.name) + "" || "");
 }
+
+function leave(country) {
+  current.text("");
+}
+
+function clearHist() {
+  d3.select("#my_dataviz").select("svg").remove();
+}
+
+
+//
+// Functions
+//
 
 function makeHistogram(country) {
   // set the dimensions and margins of the graph
@@ -174,49 +221,6 @@ function makeScatterPlot(country) {
     }
   );
 }
-
-function leave(country) {
-  current.text("");
-}
-
-function clearHist() {
-  d3.select("#my_dataviz").select("svg").remove();
-}
-
-//
-// Variables
-//
-
-// var hist = d3.select("#my_dataviz")
-var current = d3.select("#current");
-var selected1 = d3.select("#selected1");
-var selected2 = d3.select("#selected2");
-var chartSelect = d3.select("#chartSelect");
-var canvas = d3.select("#globe");
-var canvas2 = d3.select("#box");
-var canvas3 = d3.select("#info");
-var context = canvas.node().getContext("2d");
-var water = { type: "Sphere" };
-var projection = d3.geoOrthographic().precision(0.1);
-var graticule = d3.geoGraticule10();
-var path = d3.geoPath(projection).context(context);
-var v0; // Mouse position in Cartesian coordinates at start of drag gesture.
-var r0; // Projection rotation as Euler angles at start.
-var q0; // Projection rotation as versor at start.
-var lastTime = d3.now();
-var degPerMs = degPerSec / 1000;
-var width, height;
-var width2, height2;
-var land, countries;
-var countryList;
-var autorotate, now, diff, roation;
-var currentCountry;
-var selectedCountry1;
-var selectedCountry2;
-
-//
-// Functions
-//
 
 function setAngles() {
   var rotation = projection.rotate();
