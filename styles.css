@@ -12,21 +12,22 @@ body {
 
 #globe {
   cursor: move;
-  width: 50%;
+  width: 50vw;
 }
 
 .info {
   width: auto;
   height: auto;
   /* position: relative; TODO: May have to add this to box (parent container)*/
-  position: absolute;
-  bottom: 0;
+  /* position: absolute; */
+  /* bottom: 0; */
 }
 
 #box {
-  width: 49vw;
+  width: 45vw;
   height: 100vh;
   background-color: white;
+  padding: 2%;
 }
 
 #current {
@@ -47,7 +48,6 @@ body {
   font-family: sans-serif;
 }
 
-#my_dataviz {
-  background-color: #eee;
+#my_dataviz, #my_dataviz2 {
   color: black;
 }

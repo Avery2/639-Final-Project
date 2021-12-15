@@ -17,9 +17,51 @@ var colorGraticule = "#ccc";
 var colorCountry = "#a00";
 var colorSelected = colorCountry; //"#2b8cbe"
 
+// var visHeight = screen.height * 0.4;
+// var visWidth = screen.width * 0.5 | 0;
+var visHeight = window.innerHeight * 0.4;
+var visWidth = (window.innerWidth * 0.45) | 0;
+
+function clearHist() {
+  d3.select("#my_dataviz").select("svg").remove();
+}
+
+//
+// Variables
+//
+
+// var hist = d3.select("#my_dataviz")
+var current = d3.select("#current");
+var selected1 = d3.select("#selected1");
+var selected2 = d3.select("#selected2");
+var chartSelect = d3.select("#chartSelect");
+var groupSelect = d3.select("#groupSelect");
+var canvas = d3.select("#globe");
+var canvas2 = d3.select("#box");
+var canvas3 = d3.select("#info");
+var context = canvas.node().getContext("2d");
+var water = { type: "Sphere" };
+var projection = d3.geoOrthographic().precision(0.1);
+var graticule = d3.geoGraticule10();
+var path = d3.geoPath(projection).context(context);
+var v0; // Mouse position in Cartesian coordinates at start of drag gesture.
+var r0; // Projection rotation as Euler angles at start.
+var q0; // Projection rotation as versor at start.
+var lastTime = d3.now();
+var degPerMs = degPerSec / 1000;
+var width, height;
+var width2, height2;
+var land, countries;
+var countryList;
+var autorotate, now, diff, roation;
+var currentCountry;
+var selectedCountry1;
+var selectedCountry2;
+
 //
 // Handler
 //
+
 console.log("Starting...");
 
 function enter(country) {
@@ -29,26 +71,39 @@ function enter(country) {
   current.text("" + (country && country.name) + "" || "");
 }
 
-function makeHistogram(country) {
+function leave(country) {
+  current.text("");
+}
+
+function clearHist() {
+  d3.select("#my_dataviz").select("svg").remove();
+  d3.select("#my_dataviz2").select("svg").remove();
+}
+
+//
+// Functions
+//
+
+function makeHistogram(country, dom_id) {
   // set the dimensions and margins of the graph
   var margin = { top: 10, right: 30, bottom: 30, left: 40 },
-    width = 460 - margin.left - margin.right,
-    height = 400 - margin.top - margin.bottom;
+    width = visWidth - margin.left - margin.right,
+    height = visHeight - margin.top - margin.bottom;
 
   // append the svg object to the body of the page
   var svg = d3.select("svg > g");
 
-  if (svg.empty()) {
-    var svg = d3
-      .select("#my_dataviz")
-      .append("svg")
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
-      .append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+  // if (svg.empty()) {
+  var svg = d3
+    .select(dom_id)
+    .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    svg.append("text");
-  }
+  svg.append("text");
+  // }
 
   // get the data
   d3.csv("", function (data) {
@@ -61,9 +116,11 @@ function makeHistogram(country) {
     var data = trans_data;
 
     if (data.length == 1) {
-      d3.select("#my_dataviz").select("text").text("This country does not have the requested data.")
-        .attr("transform", "translate(0," + height/2 + ")")
-      return
+      d3.select(dom_id)
+        .select("text")
+        .text("This country does not have the requested data.")
+        .attr("transform", "translate(0," + height / 2 + ")");
+      return;
     }
 
     var x = d3
@@ -126,13 +183,13 @@ function makeHistogram(country) {
   });
 }
 
-function makeScatterPlot(country) {
+function makeScatterPlot(country, dom_id) {
   var margin = { top: 10, right: 30, bottom: 30, left: 60 },
-    width = 460 - margin.left - margin.right,
-    height = 400 - margin.top - margin.bottom;
+    width = visWidth - margin.left - margin.right,
+    height = visHeight - margin.top - margin.bottom;
 
   var svg = d3
-    .select("#my_dataviz")
+    .select(dom_id)
     .append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
@@ -171,49 +228,6 @@ function makeScatterPlot(country) {
     }
   );
 }
-
-function leave(country) {
-  current.text("");
-}
-
-function clearHist() {
-  d3.select("#my_dataviz").select("svg").remove();
-}
-
-//
-// Variables
-//
-
-// var hist = d3.select("#my_dataviz")
-var current = d3.select("#current");
-var selected1 = d3.select("#selected1");
-var selected2 = d3.select("#selected2");
-var chartSelect = d3.select("#chartSelect");
-var canvas = d3.select("#globe");
-var canvas2 = d3.select("#box");
-var canvas3 = d3.select("#info");
-var context = canvas.node().getContext("2d");
-var water = { type: "Sphere" };
-var projection = d3.geoOrthographic().precision(0.1);
-var graticule = d3.geoGraticule10();
-var path = d3.geoPath(projection).context(context);
-var v0; // Mouse position in Cartesian coordinates at start of drag gesture.
-var r0; // Projection rotation as Euler angles at start.
-var q0; // Projection rotation as versor at start.
-var lastTime = d3.now();
-var degPerMs = degPerSec / 1000;
-var width, height;
-var width2, height2;
-var land, countries;
-var countryList;
-var autorotate, now, diff, roation;
-var currentCountry;
-var selectedCountry1;
-var selectedCountry2;
-
-//
-// Functions
-//
 
 function setAngles() {
   var rotation = projection.rotate();
@@ -283,6 +297,9 @@ function render() {
   }
   if (selectedCountry1) {
     fill(selectedCountry1, colorSelected);
+  }
+  if (selectedCountry2) {
+    fill(selectedCountry2, colorSelected);
   }
 }
 
@@ -367,23 +384,57 @@ function selectOnClick() {
     return parseInt(c.id, 10) === parseInt(cp.id, 10);
   });
 
-  doCharts(country);
+  var groupNum = groupSelect.node().value;
 
-  selectedCountry1 = cp;
+  if (groupNum == "1") {
+    selectedCountry1 = cp;
+  }
+  if (groupNum == "2") {
+    selectedCountry2 = cp;
+  }
   render();
 
   // selection titles
-  selected1.text("Select 1: " + (country && country.name) + "" || "");
+  if (groupNum == "1") {
+    selected1.text("Select 1: " + (country && country.name) + "" || "");
+  }
+  if (groupNum == "2") {
+    selected2.text("Select 2: " + (country && country.name) + "" || "");
+  }
+
+  doCharts();
 }
 
-function doCharts(country) {
+function doCharts() {
   var chartType = chartSelect.node().value;
+
+  if (selectedCountry1) {
+    var country1 = countryList.find(function (c) {
+      return parseInt(c.id, 10) === parseInt(selectedCountry1.id, 10);
+    });
+  }
+  if (selectedCountry2) {
+    var country2 = countryList.find(function (c) {
+      return parseInt(c.id, 10) === parseInt(selectedCountry2.id, 10);
+    });
+  }
+
   if (chartType == "1") {
     clearHist();
-    makeHistogram(country);
+    if (country1) {
+      makeHistogram(country1, "#my_dataviz");
+    }
+    if (country2) {
+      makeHistogram(country2, "#my_dataviz2");
+    }
   } else if (chartType == "2") {
     clearHist();
-    makeScatterPlot(country);
+    if (country1) {
+      makeScatterPlot(country1, "#my_dataviz");
+    }
+    if (country2) {
+      makeScatterPlot(country2, "#my_dataviz2");
+    }
   }
 }
 
@@ -441,8 +492,5 @@ loadData(function (world, cList) {
 
 // handle on click event
 d3.select("#chartSelect").on("change", function () {
-  var country = countryList.find(function (c) {
-    return parseInt(c.id, 10) === parseInt(selectedCountry1.id, 10);
-  });
-  doCharts(country);
+  doCharts();
 });
