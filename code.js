@@ -19,7 +19,7 @@ var colorSelected = colorCountry; //"#2b8cbe"
 
 // var visHeight = screen.height * 0.4;
 // var visWidth = screen.width * 0.5 | 0;
-var visHeight = window.innerHeight * 0.37;
+var visHeight = window.innerHeight * 0.35;
 var visWidth = (window.innerWidth * 0.45) | 0;
 
 //
@@ -82,7 +82,7 @@ function clearHist() {
 
 function makeHistogram(country, dom_id) {
   // set the dimensions and margins of the graph
-  var margin = { top: 10, right: 30, bottom: 30, left: 40 },
+  var margin = { top: 10, right: 30, bottom: 70, left: 40 },
     width = visWidth - margin.left - margin.right,
     height = visHeight - margin.top - margin.bottom;
 
@@ -141,7 +141,6 @@ function makeHistogram(country, dom_id) {
       .scaleLinear()
       // .domain([0, 1000]) // can use this instead of 1000 to have the max of data: d3.max(data, function(d) { return +d.price })
       .domain([
-        // 0,
         d3.min(data, function (d) {
           return +d.val;
         }),
@@ -150,10 +149,17 @@ function makeHistogram(country, dom_id) {
         }),
       ])
       .range([0, width]);
+
     svg
       .append("g")
       .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x));
+      // .attr("transform", "rotate(-65)")
+      .call(d3.axisBottom(x))
+      .selectAll("text")
+        .style("text-anchor", "end")
+        .attr("dx", "-.8em")
+        .attr("dy", ".15em")
+        .attr("transform", "rotate(-65)");
 
     // set the parameters for the histogram
     var histogram = d3
