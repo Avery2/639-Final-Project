@@ -24,9 +24,10 @@ body {
 }
 
 #box {
-  width: 50vw;
+  width: 45vw;
   height: 100vh;
   background-color: white;
+  padding: 2%;
 }
 
 #current {
@@ -48,6 +49,5 @@ body {
 }
 
 #my_dataviz, #my_dataviz2 {
-  background-color: #eee;
   color: black;
 }

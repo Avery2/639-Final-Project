@@ -20,7 +20,7 @@ var colorSelected = colorCountry; //"#2b8cbe"
 // var visHeight = screen.height * 0.4;
 // var visWidth = screen.width * 0.5 | 0;
 var visHeight = window.innerHeight * 0.4;
-var visWidth = (window.innerWidth * 0.5) | 0;
+var visWidth = (window.innerWidth * 0.45) | 0;
 
 //
 // Variables
