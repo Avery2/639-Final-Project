@@ -51,3 +51,7 @@ body {
 #my_dataviz, #my_dataviz2 {
   color: black;
 }
+
+#dataSelect {
+  width: 200px;
+}

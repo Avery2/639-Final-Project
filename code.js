@@ -19,12 +19,8 @@ var colorSelected = colorCountry; //"#2b8cbe"
 
 // var visHeight = screen.height * 0.4;
 // var visWidth = screen.width * 0.5 | 0;
-var visHeight = window.innerHeight * 0.4;
+var visHeight = window.innerHeight * 0.37;
 var visWidth = (window.innerWidth * 0.45) | 0;
-
-function clearHist() {
-  d3.select("#my_dataviz").select("svg").remove();
-}
 
 //
 // Variables
@@ -37,7 +33,7 @@ var selected2 = d3.select("#selected2");
 var chartSelect = d3.select("#chartSelect");
 var groupSelect = d3.select("#groupSelect");
 var canvas = d3.select("#globe");
-var canvas2 = d3.select("#box");
+var box = d3.select("#box");
 var canvas3 = d3.select("#info");
 var context = canvas.node().getContext("2d");
 var water = { type: "Sphere" };
@@ -93,7 +89,6 @@ function makeHistogram(country, dom_id) {
   // append the svg object to the body of the page
   var svg = d3.select("svg > g");
 
-  // if (svg.empty()) {
   var svg = d3
     .select(dom_id)
     .append("svg")
@@ -103,17 +98,36 @@ function makeHistogram(country, dom_id) {
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
   svg.append("text");
-  // }
+  // var new_data = Object.entries(country);
+  var my_keys = Object.keys(country);
+  var dropDown = d3.select("#dataSelect");
+
+  var options = dropDown
+    .selectAll("option")
+    .data(my_keys)
+    .enter()
+    .append("option");
+
+  options
+    .text(function (d) {
+      return d;
+    })
+    .attr("value", function (d) {
+      return d;
+    });
+
+  var selectedInd = dropDown.node().value;
+
+  // var my_data = country.Urban_population;
+  var my_data = country[selectedInd];
+  var trans_data = my_data.map(function (e) {
+    return { val: e.toString() };
+  });
+  var data = trans_data;
 
   // get the data
-  d3.csv("", function (data) {
+  d3.csv("", function () {
     // X axis: scale and draw:
-
-    var my_data = country.Urban_population;
-    var trans_data = my_data.map(function (e) {
-      return { val: e.toString() };
-    });
-    var data = trans_data;
 
     if (data.length == 1) {
       d3.select(dom_id)
@@ -382,6 +396,17 @@ function selectOnClick() {
   var cp = getCountry(this);
   console.log("selectOnClick");
 
+  if (cp === undefined) {
+    if (groupNum == "1") {
+      selectedCountry1 = undefined;
+    }
+    if (groupNum == "2") {
+      selectedCountry2 = undefined;
+    }
+    render();
+    return;
+  }
+
   var country = countryList.find(function (c) {
     return parseInt(c.id, 10) === parseInt(cp.id, 10);
   });
@@ -398,10 +423,10 @@ function selectOnClick() {
 
   // selection titles
   if (groupNum == "1") {
-    selected1.text("Select 1: " + (country && country.name) + "" || "");
+    selected1.text("Selection 1: " + (country && country.name) + "" || "");
   }
   if (groupNum == "2") {
-    selected2.text("Select 2: " + (country && country.name) + "" || "");
+    selected2.text("Selection 2: " + (country && country.name) + "" || "");
   }
 
   doCharts();
@@ -494,6 +519,9 @@ loadData(function (world, cList) {
 
 // handle on click event
 d3.select("#chartSelect").on("change", function () {
+  doCharts();
+});
+d3.select("#dataSelect").on("change", function () {
   doCharts();
 });
 
