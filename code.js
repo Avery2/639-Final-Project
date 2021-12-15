@@ -117,8 +117,6 @@ function makeHistogram(country, dom_id) {
     });
 
   var selectedInd = dropDown.node().value;
-
-  // var my_data = country.Urban_population;
   var my_data = country[selectedInd];
   var trans_data = my_data.map(function (e) {
     return { val: e.toString() };
@@ -156,10 +154,10 @@ function makeHistogram(country, dom_id) {
       // .attr("transform", "rotate(-65)")
       .call(d3.axisBottom(x))
       .selectAll("text")
-        .style("text-anchor", "end")
-        .attr("dx", "-.8em")
-        .attr("dy", ".15em")
-        .attr("transform", "rotate(-65)");
+      .style("text-anchor", "end")
+      .attr("dx", "-.8em")
+      .attr("dy", ".15em")
+      .attr("transform", "rotate(-65)");
 
     // set the parameters for the histogram
     var histogram = d3
@@ -204,6 +202,9 @@ function makeHistogram(country, dom_id) {
 }
 
 function makeScatterPlot(country, dom_id) {
+  if (country == undefined) {
+    return;
+  }
   var margin = { top: 10, right: 30, bottom: 30, left: 60 },
     width = visWidth - margin.left - margin.right,
     height = visHeight - margin.top - margin.bottom;
@@ -216,6 +217,29 @@ function makeScatterPlot(country, dom_id) {
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+  var my_keys = Object.keys(country);
+  var dropDown = d3.select("#dataSelect");
+
+  var options = dropDown
+    .selectAll("option")
+    .data(my_keys)
+    .enter()
+    .append("option");
+
+  options
+    .text(function (d) {
+      return d;
+    })
+    .attr("value", function (d) {
+      return d;
+    });
+  // var selectedInd = dropDown.node().value;
+  // var my_data = country[selectedInd];
+  // var trans_data = my_data.map(function (e, i) {
+  //   return { x: e.toString(), y: i.toString() };
+  // });
+  // var data = trans_data;
+
   d3.csv(
     "https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/2_TwoNum.csv",
     function (data) {
@@ -227,8 +251,31 @@ function makeScatterPlot(country, dom_id) {
         .call(d3.axisBottom(x));
 
       // Add Y axis
-      var y = d3.scaleLinear().domain([0, 500000]).range([height, 0]);
+      var y = d3
+        .scaleLinear()
+        .domain([
+          0,
+          // d3.min(data, function (d) {
+          //   return +d.x;
+          // }),
+          500000,
+        // d3.max(data, function (d) {
+        //   return +d.x;
+        // }),
+        ])
+        .range([height, 0]);
       svg.append("g").call(d3.axisLeft(y));
+      // .domain([
+      //   d3.min(data, function (d) {
+      //     return +d.val;
+      //   }),
+      //   d3.max(data, function (d) {
+      //     return +d.val;
+      //   }),
+      // ])
+      // .range([0, width]);
+
+      console.log({ data });
 
       // Add dots
       svg
@@ -239,9 +286,11 @@ function makeScatterPlot(country, dom_id) {
         .append("circle")
         .attr("cx", function (d) {
           return x(d.GrLivArea);
+          // return x(d.x);
         })
         .attr("cy", function (d) {
           return y(d.SalePrice);
+          // return y(d.y);
         })
         .attr("r", 1.5)
         .style("fill", "#69b3a2");
