@@ -275,7 +275,7 @@ function scale() {
 }
 
 function startRotation(delay) {
-  if (!d3.select("#disablemove").property("checked")) {
+  if (d3.select("#disablemove").property("checked")) {
     autorotate.restart(rotate, delay || 0);
   }
 }
@@ -526,7 +526,7 @@ d3.select("#dataSelect").on("change", function () {
 });
 
 d3.select("#disablemove").on("change", function () {
-  if (d3.select("#disablemove").property("checked")) {
+  if (!d3.select("#disablemove").property("checked")) {
     stopRotation();
   } else {
     startRotation();

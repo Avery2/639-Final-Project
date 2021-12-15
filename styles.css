@@ -26,7 +26,7 @@ body {
 #box {
   width: 45vw;
   height: calc(92vh);
-  background-color: white;
+  background-color: #eee;
   padding: 2%;
 }
 
