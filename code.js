@@ -22,10 +22,15 @@ var colorSelected = colorCountry; //"#2b8cbe"
 var visHeight = window.innerHeight * 0.4;
 var visWidth = (window.innerWidth * 0.45) | 0;
 
+function clearHist() {
+  d3.select("#my_dataviz").select("svg").remove();
+}
+
 //
 // Variables
 //
 
+// var hist = d3.select("#my_dataviz")
 var current = d3.select("#current");
 var selected1 = d3.select("#selected1");
 var selected2 = d3.select("#selected2");
