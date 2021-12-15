@@ -261,7 +261,9 @@ function scale() {
 }
 
 function startRotation(delay) {
-  autorotate.restart(rotate, delay || 0);
+  if (!d3.select("#disablemove").property("checked")) {
+    autorotate.restart(rotate, delay || 0);
+  }
 }
 
 function stopRotation() {
@@ -493,4 +495,12 @@ loadData(function (world, cList) {
 // handle on click event
 d3.select("#chartSelect").on("change", function () {
   doCharts();
+});
+
+d3.select("#disablemove").on("change", function () {
+  if (d3.select("#disablemove").property("checked")) {
+    stopRotation();
+  } else {
+    startRotation();
+  }
 });

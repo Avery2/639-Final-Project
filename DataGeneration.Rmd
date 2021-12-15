@@ -133,12 +133,49 @@ final_data <- data %>% full_join(ind_grp)
 write_tsv(final_data, "my_data.tsv")
 ```
 
-```{python}
+# chosen indicators
 
-```
+## Simple
 
+### Population
+Population_growth_(annual_%)
+Population,_total
+Population_density_(people_per_sq._km_of_land_area)
+Rural_population	
+Rural_population_(%_of_total_population)	
+Urban_population	
+Urban_population_(%_of_total)
+Mortality_rate,_adult,_male_(per_1,000_male_adults)	
+Mortality_rate,_adult,_female_(per_1,000_female_adults)	
 
+### Land
+Surface_area_(sq._km)
+Land_area_(sq._km)
 
+## Complex
+
+Access_to_electricity_(%_of_population)	
+Arable_land_(%_of_land_area)	
+Intentional_homicides_(per_100,000_people)
+Share_of_women_in_wage_employment_in_the_nonagricultural_sector_(%_of_total_nonagricultural_employment)
+Mobile_cellular_subscriptions
+Labor_force_participation_rate,_total_(%_of_total_population_ages_15+)_(national_estimate)	
+Ratio_of_female_to_male_labor_force_participation_rate_(%)_(national_estimate)	
+CO2_emissions_(metric_tons_per_capita)	
+
+### Economics
+GDP_per_capita_(current_US$)	
+GDP_growth_(annual_%)
+GDP_per_capita_growth_(annual_%)
+General_government_final_consumption_expenditure_(%_of_GDP)	
+Household_final_consumption_expenditure,_etc._(%_of_GDP)	
+
+### Education
+Theoretical_duration_of_primary_education_(years)	
+Enrolment_in_primary_education,_both_sexes_(number)	
+Enrolment_in_secondary_general,_both_sexes_(number)
+Percentage_of_students_in_primary_education_who_are_female_(%)
+Percentage_of_students_in_secondary_general_education_who_are_female_(%)
 
 
 
