@@ -3,7 +3,7 @@
 //
 
 // ms to wait after dragging before auto-rotating
-var rotationDelay = 1500;
+var rotationDelay = 2500;
 // scale of the globe (not the canvas element)
 var scaleFactor = 0.9;
 // autorotation speed
@@ -455,6 +455,7 @@ function mousemove() {
 }
 
 function selectOnClick() {
+  selectedIndGlobal = dropDown.node().value.toString().replaceAll("_" ," ");
   var cp = getCountry(this);
   console.log("selectOnClick");
 
@@ -492,14 +493,42 @@ function selectOnClick() {
   }
   render();
 
+  var chartType = chartSelect.node().value;
   // selection titles
-  if (groupNum == "1") {
+  if (country && groupNum == "1") {
     selectedCountry1name = "" + (country && country.name) || ""
-    selected1.text("" + (country && country.name) + ": " + selectedIndGlobal || "");
+    if (chartType == 1) {
+      selected1.text(
+        "" +
+          selectedCountry1name +
+          ": " +
+          " (x-axis: " +
+          selectedIndGlobal +
+          ", y-axis: Frequency)" || ""
+      );
+    } else {
+      selected1.text(
+        "" + (country && country.name) + ": " + selectedIndGlobal || ""
+      );
+    }
+    
   }
-  if (groupNum == "2") {
+  if (country && groupNum == "2") {
     selectedCountry2name = "" + (country && country.name) || ""
-    selected2.text("" + (country && country.name) + ": " + selectedIndGlobal || "");
+    if (chartType != 1) {
+      selected2.text(
+        "" + (country && country.name) + ": " + selectedIndGlobal || ""
+      );
+    } else {
+      selected2.text(
+        "" +
+          selectedCountry2name +
+          ": " +
+          " (x-axis: " +
+          selectedIndGlobal +
+          ", y-axis: Frequency)" || ""
+      );
+    }
   }
 
   doCharts();
