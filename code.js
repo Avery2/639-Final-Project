@@ -585,11 +585,17 @@ loadData(function (world, cList) {
 d3.select("#chartSelect").on("change", function () {
   doCharts();
 });
+var chartType = chartSelect.node().value;
 d3.select("#dataSelect").on("change", function () {
   selectedIndGlobal = dropDown.node().value.toString().replaceAll("_" ," ");
   console.log({selectedIndGlobal})
-  selected1.text("" + (selectedCountry1name) + ": " + selectedIndGlobal || "");
-  selected2.text("" + (selectedCountry2name) + ": " + selectedIndGlobal || "");
+  if (chartType == 1) {
+    selected1.text("" + selectedCountry1name + ": " + " (x-axis: " + selectedIndGlobal + ", y-axis: Frequency)" || "");
+    selected2.text("" + selectedCountry2name + ": " + " (x-axis: " + selectedIndGlobal + ", y-axis: Frequency)" || "");
+  } else {
+    selected1.text("" + selectedCountry1name + ": " + selectedIndGlobal || "");
+    selected2.text("" + selectedCountry2name + ": " + selectedIndGlobal || "");
+  }
   doCharts();
 });
 
