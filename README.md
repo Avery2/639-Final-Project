@@ -4,6 +4,8 @@ https://www.averychan.site/639-Final-Project/
 
 > The description with storyboards from the proposal. 
 
+Below is our storyboard. We designed our interaction with the idea of a globe that would have brushing and linking functionaliy to help explore world development data ([link](https://datacatalog.worldbank.org/search/dataset/0037712)). In particular, we would brush the globe which was located on the left and would link to multiple visualizations on the right hand side. The visualizations compare two groups (shown by two different colors in our storyboard) and would be enhanced by queries on the data (top box).
+
 <div align="center">
   <img src="https://user-images.githubusercontent.com/53503018/146668022-7f88c3a6-7838-4a47-80a9-340c3b2dc9a1.png" width="80%"/>
   <p>Our storyboard.</p>
@@ -12,6 +14,8 @@ https://www.averychan.site/639-Final-Project/
 > A brief description of your final interactive visualization application.
 
 The final interactive visualisation is a data exploration tool designed to better understand the world we live in. It allows us to select one or more countries and see the specific countries economic as well as development indicators. Along with this, it helps us compare the economic and development indicators of 2 countries with the help of a histogram and scatterplot. 
+
+In particular, we were able to create a globe that was able to link to a histogram on the right hand side.
 
 > An explanation of changes between the storyboard and the final implementation.
 
