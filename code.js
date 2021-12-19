@@ -105,6 +105,7 @@ function makeHistogram(country, dom_id) {
   svg.append("text");
   // var new_data = Object.entries(country);
   var my_keys = Object.keys(country);
+  my_keys.splice(0, 3);
 
   var options = dropDown
     .selectAll("option")
@@ -282,8 +283,6 @@ function makeScatterPlot(country, dom_id) {
       //   }),
       // ])
       // .range([0, width]);
-
-      console.log({ data });
 
       // Add dots
       svg
@@ -589,7 +588,6 @@ d3.select("#chartSelect").on("change", function () {
 var chartType = chartSelect.node().value;
 d3.select("#dataSelect").on("change", function () {
   selectedIndGlobal = dropDown.node().value.toString().replaceAll("_" ," ");
-  console.log({selectedIndGlobal})
   if (chartType == 1) {
     selected1.text("" + selectedCountry1name + ": " + " (x-axis: " + selectedIndGlobal + ", y-axis: Frequency)" || "");
     selected2.text("" + selectedCountry2name + ": " + " (x-axis: " + selectedIndGlobal + ", y-axis: Frequency)" || "");
