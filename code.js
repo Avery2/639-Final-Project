@@ -104,7 +104,9 @@ function makeHistogram(country, dom_id) {
 
   var options = dropDown
     .selectAll("option")
-    .data(my_keys)
+    .data(my_keys.map(function (e) {
+      return e.replaceAll("_", " ");
+    }))
     .enter()
     .append("option");
 
@@ -222,7 +224,9 @@ function makeScatterPlot(country, dom_id) {
 
   var options = dropDown
     .selectAll("option")
-    .data(my_keys)
+    .data(my_keys.map(function (e) {
+      return e.replaceAll("_", " ");
+    }))
     .enter()
     .append("option");
 
