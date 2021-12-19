@@ -15,7 +15,9 @@ var colorWater = "#4C86A8";
 var colorLand = "#BDC696";
 var colorGraticule = "#ccc";
 var colorCountry = "#a00";
+var colorCountry2 = "#FFA500"
 var colorSelected = colorCountry; //"#2b8cbe"
+var colorSelected2 = colorCountry2
 
 // var visHeight = screen.height * 0.4;
 // var visWidth = screen.width * 0.5 | 0;
@@ -97,7 +99,7 @@ function makeHistogram(country, dom_id) {
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-  svg.append("text");
+  svg.append("text")
   // var new_data = Object.entries(country);
   var my_keys = Object.keys(country);
   var dropDown = d3.select("#dataSelect");
@@ -198,6 +200,23 @@ function makeHistogram(country, dom_id) {
         return height - y(d.length);
       })
       .style("fill", "#69b3a2");
+
+
+    // svg.append("text")
+    //   .attr("class", "x label")
+    //   .attr("text-anchor", "end")
+    //   .attr("x", width)
+    //   .attr("y", height + 25)
+    //   .text("income per capita, inflation-adjusted (dollars)");
+
+    // title label: this adds the title to histogram, needs to get rid of the hardcode ".text"
+    svg.append("text")
+        .attr("x", (width / 2))             
+        .attr("y", 10)
+        .attr("text-anchor", "middle")  
+        .style("font-size", "16px") 
+        .style("text-decoration", "underline")  
+        .text("Value vs Date Graph");
   });
 }
 
@@ -294,6 +313,23 @@ function makeScatterPlot(country, dom_id) {
         })
         .attr("r", 1.5)
         .style("fill", "#69b3a2");
+      
+      // x axis label
+      svg.append("text")
+        .attr("class", "x label")
+        .attr("text-anchor", "end")
+        .attr("x", width)
+        .attr("y", height - 6)
+        .text("years");
+      
+      // y axis label
+      svg.append("text")
+        .attr("class", "y label")
+        .attr("text-anchor", "end")
+        .attr("y", 6)
+        .attr("dy", ".75em")
+        .attr("transform", "rotate(-90)")
+        .text("life expectancy (years)");
     }
   );
 }
@@ -370,7 +406,7 @@ function render() {
     fill(selectedCountry1, colorSelected);
   }
   if (selectedCountry2) {
-    fill(selectedCountry2, colorSelected);
+    fill(selectedCountry2, colorSelected2);
   }
 }
 
