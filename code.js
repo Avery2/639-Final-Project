@@ -15,7 +15,8 @@ var colorWater = "#4C86A8";
 var colorLand = "#BDC696";
 var colorGraticule = "#ccc";
 var colorCountry = "#a00";
-var colorSelected = colorCountry; //"#2b8cbe"
+var colorSelected = "#433E0E";
+var colorSelected2 = "#E3170A";
 
 // var visHeight = screen.height * 0.4;
 // var visWidth = screen.width * 0.5 | 0;
@@ -377,7 +378,7 @@ function render() {
     fill(selectedCountry1, colorSelected);
   }
   if (selectedCountry2) {
-    fill(selectedCountry2, colorSelected);
+    fill(selectedCountry2, colorSelected2);
   }
 }
 
