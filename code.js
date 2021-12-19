@@ -16,7 +16,7 @@ var colorLand = "#BDC696";
 var colorGraticule = "#ccc";
 var colorCountry = "#a00";
 var colorSelected = "#433E0E";
-var colorSelected2 = "#E3170A";
+var colorSelected2 = "#6D8004";
 
 // var visHeight = screen.height * 0.4;
 // var visWidth = screen.width * 0.5 | 0;
@@ -458,6 +458,17 @@ function selectOnClick() {
   var cp = getCountry(this);
   console.log("selectOnClick");
 
+  var groupNum = groupSelect.node().value;
+  if (d3.select("#autoswap").property("checked")) {
+    if (groupNum == 1) {
+      groupSelect.property('value', 2);
+    } else if (groupNum == 2) {
+      groupSelect.property('value', 1);
+    }
+  }
+
+  groupNum = groupSelect.node().value;
+
   if (cp === undefined) {
     if (groupNum == "1") {
       selectedCountry1 = undefined;
@@ -472,8 +483,6 @@ function selectOnClick() {
   var country = countryList.find(function (c) {
     return parseInt(c.id, 10) === parseInt(cp.id, 10);
   });
-
-  var groupNum = groupSelect.node().value;
 
   if (groupNum == "1") {
     selectedCountry1 = cp;
