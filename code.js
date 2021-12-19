@@ -118,7 +118,7 @@ function makeHistogram(country, dom_id) {
       return d;
     });
 
-  var selectedInd = dropDown.node().value;
+  var selectedInd = dropDown.node().value.replaceAll(" " ,"_");
   var my_data = country[selectedInd];
   var trans_data = my_data.map(function (e) {
     return { val: e.toString() };
@@ -237,7 +237,8 @@ function makeScatterPlot(country, dom_id) {
     .attr("value", function (d) {
       return d;
     });
-  // var selectedInd = dropDown.node().value;
+  // // var selectedInd = dropDown.node().value;
+  // var selectedInd = dropDown.node().value.replaceAll(" " ,"_");
   // var my_data = country[selectedInd];
   // var trans_data = my_data.map(function (e, i) {
   //   return { x: e.toString(), y: i.toString() };
