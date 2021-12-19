@@ -4,7 +4,10 @@ https://www.averychan.site/639-Final-Project/
 
 > The description with storyboards from the proposal. 
 
-![storyboard](https://user-images.githubusercontent.com/53503018/146668022-7f88c3a6-7838-4a47-80a9-340c3b2dc9a1.png)
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/53503018/146668022-7f88c3a6-7838-4a47-80a9-340c3b2dc9a1.png" width="80%"/>
+  <p>Our storyboard.</p>
+</div>
 
 > A brief description of your final interactive visualization application.
 
