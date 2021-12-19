@@ -53,6 +53,10 @@ var autorotate, now, diff, roation;
 var currentCountry;
 var selectedCountry1;
 var selectedCountry2;
+var dropDown = d3.select("#dataSelect");
+var selectedIndGlobal = ""
+var selectedCountry1name = ""
+var selectedCountry2name = ""
 
 //
 // Handler
@@ -100,7 +104,6 @@ function makeHistogram(country, dom_id) {
   svg.append("text");
   // var new_data = Object.entries(country);
   var my_keys = Object.keys(country);
-  var dropDown = d3.select("#dataSelect");
 
   var options = dropDown
     .selectAll("option")
@@ -220,7 +223,6 @@ function makeScatterPlot(country, dom_id) {
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
   var my_keys = Object.keys(country);
-  var dropDown = d3.select("#dataSelect");
 
   var options = dropDown
     .selectAll("option")
@@ -483,10 +485,12 @@ function selectOnClick() {
 
   // selection titles
   if (groupNum == "1") {
-    selected1.text("Selection 1: " + (country && country.name) + "" || "");
+    selectedCountry1name = "" + (country && country.name) || ""
+    selected1.text("" + (country && country.name) + ": " + selectedIndGlobal || "");
   }
   if (groupNum == "2") {
-    selected2.text("Selection 2: " + (country && country.name) + "" || "");
+    selectedCountry2name = "" + (country && country.name) || ""
+    selected2.text("" + (country && country.name) + ": " + selectedIndGlobal || "");
   }
 
   doCharts();
@@ -582,6 +586,10 @@ d3.select("#chartSelect").on("change", function () {
   doCharts();
 });
 d3.select("#dataSelect").on("change", function () {
+  selectedIndGlobal = dropDown.node().value.toString().replaceAll("_" ," ");
+  console.log({selectedIndGlobal})
+  selected1.text("" + (selectedCountry1name) + ": " + selectedIndGlobal || "");
+  selected2.text("" + (selectedCountry2name) + ": " + selectedIndGlobal || "");
   doCharts();
 });
 
